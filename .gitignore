@@ -4,7 +4,7 @@
 
 ### VisualStudioCode ###
 .vscode/*
-train/
+.report/app/home/train
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
