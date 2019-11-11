@@ -61,18 +61,17 @@ def upload(request):
             fs = FileSystemStorage()
             fs.save(uploaded_file.name,uploaded_file)
             get_feature(uploaded_file.name)
-            #print(uploaded_file.name)
             filename, file_extension = os.path.splitext(uploaded_file.name)
-            print(settings.STATIC_PATH_UPLOAD)
+            
             feature = np.load("C://Users//DELL//Desktop//web-image//ImageSearch-BigData//report//app//"+filename+".npy")
             # if tree == None:
             
             
             
-            tree = process.vptree(1000)
-            root = tree.build(0,999)
-            tree.search(root,feature,5)
+            # tree = process.vptree(1000)
+            # root = tree.build(0,999)
+            # tree.search(root,feature,5)
         
-            for x in tree.heap:
-                kq.append((x[0],x[1]))
+            # for x in tree.heap:
+            #     kq.append((x[0],x[1]))
     return render(request,'pages/upload.html')
