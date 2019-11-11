@@ -9,7 +9,7 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
+/split_data
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
