@@ -12,7 +12,7 @@ import json
 import sys
 import numpy as np
 from django.conf import settings
-
+from . import config
 # Create your views here.
 
 def index(request):
@@ -23,6 +23,7 @@ def get_feature(x):
     """
         get tokenizer
     """
+    path = settings.MEDIA_ROOT
     url_token = 'http://service.mmlab.uit.edu.vn/mmlab_api/user_login/post/'
     data ={'user_name': 'admin', 'password': 'admin'}
     headers = {'Content-type': 'application/json'}
@@ -33,7 +34,8 @@ def get_feature(x):
         get feature
     """
     url_feature = 'http://service.mmlab.uit.edu.vn/mmlab_api/face/feature_extract/post'
-    path_img = 'C://Users//DELL//Desktop//web-image//ImageSearch-BigData//report//app//'+x
+    path_img = os.path.join(path,x)
+    print("day la path",path_img)
     filename, file_extension = os.path.splitext(x)
     image = open(path_img, 'rb')
     image_read = image.read()
@@ -64,14 +66,11 @@ def upload(request):
             filename, file_extension = os.path.splitext(uploaded_file.name)
             
             feature = np.load("C://Users//DELL//Desktop//web-image//ImageSearch-BigData//report//app//"+filename+".npy")
-            # if tree == None:
+            if config.VP_buid == False:
+                config.root = process.vptree(1000)      
+                config.root = config.build(0,999)
             
-            
-            
-            # tree = process.vptree(1000)
-            # root = tree.build(0,999)
-            # tree.search(root,feature,5)
-        
-            # for x in tree.heap:
-            #     kq.append((x[0],x[1]))
+            config.root.search(config.root,feature,5)
+            for x in config.root.heap:
+                kq.append((x[0],x[1]))
     return render(request,'pages/upload.html')
