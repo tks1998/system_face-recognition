@@ -15,14 +15,14 @@ class vptree:
         #print(self.items)
         self._tau = config.VP_range
         self.heap = []
-        self.path = os.getcwd()+"\\home\\train\\"
+        self.path = config.origin_data_npy #config.main_npy os.getcwd()+"\\home\\train\\"
     def distance(self,a,b):
-        a1 = np.load(self.path+str(a)+".npy") # path
-        a2 = np.load(self.path+str(b)+".npy")
+        a1 = np.load(os.path.join(self.path,str(a)+".npy")) # path
+        a2 = np.load(os.path.join(self.path,str(b)+".npy"))
         return np.linalg.norm(a1-a2)
         
     def _distance(self,a,b):
-        a1 = np.load(self.path+str(a)+".npy") # path
+        a1 = np.load(os.path.join(self.path,str(a)+".npy"))
         return np.linalg.norm(a1-b)
     def _partition(self,first,middle,last,key): # first -> last 
         #print(first,middle,last,key)
