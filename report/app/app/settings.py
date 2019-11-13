@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -23,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*yn%dlnptjkt&4gfzo^r8bzoa&sozwqa=riz@z(-v5^$31f&vt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
     "/report/app/home/static/",
@@ -125,4 +124,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/upload_img/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'home/upload_img')
-MEDIA_ROOT_NPY = os.path.join(BASE_DIR,'home\\npy_upload')
+MEDIA_ROOT_NPY = os.path.join(BASE_DIR,'home/numpy_upload')
