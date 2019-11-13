@@ -2,9 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
 from . import process
-from PIL import Image
 import os
-import cv2
 import base64
 import urllib.parse
 import requests
@@ -23,7 +21,6 @@ def get_feature(x):
     """
         get tokenizer
     """
-    path = settings.MEDIA_ROOT
     url_token = 'http://service.mmlab.uit.edu.vn/mmlab_api/user_login/post/'
     data ={'user_name': 'admin', 'password': 'admin'}
     headers = {'Content-type': 'application/json'}
@@ -34,8 +31,7 @@ def get_feature(x):
         get feature
     """
     url_feature = 'http://service.mmlab.uit.edu.vn/mmlab_api/face/feature_extract/post'
-    path_img = os.path.join(path,x)
-    print("day la path",path_img)
+    path_img = os.path.join(settings.MEDIA_ROOT,x)
     filename, file_extension = os.path.splitext(x)
     image = open(path_img, 'rb')
     image_read = image.read()
@@ -47,7 +43,8 @@ def get_feature(x):
     data_json = json.dumps(data)
     response = requests.post(url_feature, data = data_json, headers=headers)
     decoded_string = base64.b64decode(response.json()['data']['features'][0])
-    with open(filename+".npy", "wb") as image_file2:
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    with open(config.path_new_numpy, "wb") as image_file2:
       image_file2.write(decoded_string);   
   
     return 
@@ -64,13 +61,18 @@ def upload(request):
             fs.save(uploaded_file.name,uploaded_file)
             get_feature(uploaded_file.name)
             filename, file_extension = os.path.splitext(uploaded_file.name)
-            
-            feature = np.load("C://Users//DELL//Desktop//web-image//ImageSearch-BigData//report//app//"+filename+".npy")
+            feature = np.load(config.path_new_numpy)
             if config.VP_buid == False:
-                config.root = process.vptree(1000)      
-                config.root = config.build(0,999)
-            
-            config.root.search(config.root,feature,5)
-            for x in config.root.heap:
-                kq.append((x[0],x[1]))
+                config.VP_buid = True
+                config.Tree = process.vptree(config.VP_range)
+                config.root = config.Tree.build(0,config.VP_range-1) 
+            config.Tree.search(config.Root,feature,5)     
+            # for x in tree.heap:
+            #     kq.append((x[0],x[1]))
     return render(request,'pages/upload.html')
+ 
+# if tree == None:
+# tree = process.vptree(1000)
+# root = tree.build(0,999)
+# tree.search(root,feature,5)
+        
