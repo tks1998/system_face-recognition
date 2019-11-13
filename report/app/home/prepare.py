@@ -50,7 +50,7 @@ def split(path_origin_data,number_part=1000,name = ""):
     return True
 
 ff = open("image_path_all.txt","w")
-main_path =  "C:\\Users\\DELL\\Desktop\\train"
+main_path =  "C:\\Users\\DELL\\Desktop\\train"  
 split(main_path,1000,"split_data")
 ff.close()
 # ff = open("image_path_all.txt","r")
