@@ -2,14 +2,28 @@
   visibility: hidden;
   position: absolute;
 }
-body{
-  background-image: url("https://www.elsetge.cat/myimg/f/2-23697_ios-11-4k-5k-beach-ocean-iphone-wallpaper.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.inputfile + label {
+  
+  font-size: 1.25em;
+  font-weight: 700;
+  padding: 10px;
+  color: white;
+  background-color: rgb(238, 238, 238);
+  display: inline-block;
+  cursor: pointer; /* "hand" cursor */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: red;
 }
