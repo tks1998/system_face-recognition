@@ -52,23 +52,26 @@ def get_feature(x):
 # tree=None
 # root=None
 def upload(request):
-    # kq = []
-    # uploaded_file = None
-    # if request.method == 'POST':
-    #     uploaded_file = request.FILES['document']
-    #     if uploaded_file:
-    #         fs = FileSystemStorage()
-    #         fs.save(uploaded_file.name,uploaded_file)
-    #         get_feature(uploaded_file.name)
-    #         filename, file_extension = os.path.splitext(uploaded_file.name)
-    #         feature = np.load(config.path_new_numpy)
-    #         if config.VP_buid == False:
-    #             config.VP_buid = True
-    #             config.Tree = process.vptree(config.VP_range)
-    #             config.root = config.Tree.build(0,config.VP_range-1) 
-    #         config.Tree.search(config.Root,feature,5)     
-    #         # for x in tree.heap:
-    #         #     kq.append((x[0],x[1]))
+    kq = []
+    uploaded_file = None
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        if uploaded_file:
+            fs = FileSystemStorage()
+            fs.save(uploaded_file.name,uploaded_file)
+            get_feature(uploaded_file.name)
+            filename, file_extension = os.path.splitext(uploaded_file.name)
+            feature = np.load(config.path_new_numpy)
+            if config.VP_buid == False:
+                config.VP_buid = True
+                config.Tree = process.vptree(config.VP_range)
+                config.root = config.Tree.build(0,config.VP_range-1) 
+            config.Tree.search(config.root,feature,5)   
+            for x in config.Tree.heap:
+                kq.append((x[0],x[1]))
+                print(x[0],x[1])
+            config.Tree.heap = []
+            kq = []
     return render(request,'pages/upload.html')
  
 # if tree == None:

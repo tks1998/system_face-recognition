@@ -43,15 +43,15 @@ def get_path_feature(path_origin,number_part,name_folder):
 
 def split(path_origin_data,number_part=1000,name = ""):
     number_file_origin = len(next(os.walk(path_origin_data))[2])
-    if make_file(number_file_origin,number_part,"split_data") == False:
+    if make_file(number_file_origin,number_part,name) == False:
         return False
     
     get_path_feature(path_origin_data,number_part,name)
     return True
 
-ff = open("image_path_all.txt","w")
-main_path =  "C:\\Users\\DELL\\Desktop\\train"  
-split(main_path,1000,"split_data")
+ff = open("image_path_all70k.txt","w")
+main_path =  "C:\\Users\\DELL\\Desktop\\image_missing"
+split(main_path,300,"split_data70k")
 ff.close()
 # ff = open("image_path_all.txt","r")
 # d  = ff.readline()
