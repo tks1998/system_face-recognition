@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*yn%dlnptjkt&4gfzo^r8bzoa&sozwqa=riz@z(-v5^$31f&vt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -123,5 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/upload_img/'
+IMG_URL = '/upload/'
+IMG_ROOT = os.path.join(BASE_DIR,'home/image_missing/')
 MEDIA_ROOT = os.path.join(BASE_DIR,'home/upload_img')
 MEDIA_ROOT_NPY = os.path.join(BASE_DIR,'home/numpy_upload')
+
