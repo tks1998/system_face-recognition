@@ -2,3 +2,14 @@
   visibility: hidden;
   position: absolute;
 }
+body{
+  background-image: url("https://www.elsetge.cat/myimg/f/2-23697_ios-11-4k-5k-beach-ocean-iphone-wallpaper.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
