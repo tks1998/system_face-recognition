@@ -6,11 +6,23 @@
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<h2>UPLOAD</h2>
-<form method="post" enctype="multipart/form-data">
-   {% csrf_token %}
-   <input type="file" name="document">
-   <button type="submit" > upload file </button>
-</form>
+<div class="row">
+   <div class="col-sm-3">
+      <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg"/>
+            <label for="file">Choose a file</label>
+            <button class="btn btn-info" type="submit" > Search... </button>
+      </form>
+   </div>
+ 
+   <div class="col-sm-9">
+      <div class="center">
+            {% for ima in ima_list %}
+            <img class="m-2" height="300px;" src="{{ ima }}">
+            {% endfor %}
+      </div>
+   </div>
+ </div>
 
 {% endblock %}
