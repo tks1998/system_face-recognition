@@ -6,7 +6,7 @@
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<div class="row">
+<div class="row m-2">
    <div class="col-sm-3">
       <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -18,10 +18,16 @@
     
    <div class="col-sm-9">
       <div class="center">
-            {% for ima in kq2 %}
-            <img class="m-2" height="300px;" src="{{ima}}"> 
-         
+         <div class="row">
+            {% for ima in name %}
+            <div class="col-3">
+            <img style="display:block;" width="100%" src="{{ima}}"> 
+            <center>
+            xxx
+            </center>
+            </div>
             {% endfor %}
+         </div>
       </div>
    </div>
  </div>
