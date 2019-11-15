@@ -2,7 +2,7 @@ import os
 from . import config
 from . import process_Tree
 import numpy as np
-
+import heapq
 
 def process_img(file_name):
     """
@@ -20,14 +20,15 @@ def process_img(file_name):
         config.root = config.Tree.build(0, config.VP_range-1)
     """ reset variable """
     config.Tree.heap = []
-    config.Tree._tau = config.Range_find
+    config.Tree.current_Ranking = config.Range_find
     """ search """
-    config.Tree.search(config.root, feature, 5)
-    for x in config.Tree.heap:
-        distance.append(x[0])
-        index.append(str(x[1])+".png")
-        print(str(x[1])+".png")
-        config.Tree.heap = []
+    config.Tree.search(config.root, feature, config.K_similarity)
+    while config.Tree.heap:
+        x,y=heapq.heappop(config.Tree.heap)
+        distance.append(x)
+        index.append(str(y)+".png")
+        print(x,y)
+    config.Tree.heap = []
     """ return json include distance and index """
     return {"distance": distance,
             "name": index}

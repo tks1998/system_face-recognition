@@ -23,7 +23,7 @@ class vptree:
     def __init__(self,maximum):
         self.items = np.arange(1,maximum+1) # create array 1->maximum+1 -> phan tu 0->10
         #print(self.items)
-        self._tau = config.Range_find
+        self.current_Ranking = config.Range_find
         self.heap = []
         self.path = config.origin_data_npy #config.main_npy os.getcwd()+"\\home\\train\\"
     """ 
@@ -82,22 +82,22 @@ class vptree:
         
         dist = self._distance(self.items[node.index],target)
 
-        if dist < self._tau:
+        if dist < self.current_Ranking:
             if len(self.heap) == k:
                 self.heap = heapq.nsmallest(len(self.heap)-1,self.heap,key = None)
 
             heapq.heappush(self.heap,(dist,self.items[node.index]))
             if len(self.heap) == k:
-                self._tau = self.heap[len(self.heap)-1][0] 
+                self.current_Ranking = self.heap[len(self.heap)-1][0] 
         if node.left == None and node.right == None:
             return
         if dist<node.threshold:
-            if dist-self._tau<=node.threshold:
+            if dist-self.current_Ranking<=node.threshold:
                 self.search(node.left,target,k)
-            if dist+self._tau>=node.threshold:
+            if dist+self.current_Ranking>=node.threshold:
                 self.search(node.right,target,k)
         else:
-            if dist+self._tau>=node.threshold:
+            if dist+self.current_Ranking>=node.threshold:
                 self.search(node.right,target,k)
-            if dist-self._tau<=node.threshold:
+            if dist-self.current_Ranking<=node.threshold:
                 self.search(node.left,target,k)
