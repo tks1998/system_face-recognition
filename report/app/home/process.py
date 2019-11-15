@@ -2,6 +2,7 @@ import os
 import numpy as np
 import heapq 
 from . import config
+import random
 class Node:
     def __init__(self):
         self.index = -1 
@@ -13,7 +14,7 @@ class vptree:
     def __init__(self,maximum):
         self.items = np.arange(1,maximum+1) # create array 1->maximum+1 -> phan tu 0->10
         #print(self.items)
-        self._tau = config.VP_range
+        self._tau = 100000000.0
         self.heap = []
         self.path = config.origin_data_npy #config.main_npy os.getcwd()+"\\home\\train\\"
     def distance(self,a,b):
@@ -43,6 +44,7 @@ class vptree:
         node.index = lower 
         if upper-lower > 1:
             middle = round((lower+upper)/2)
+            #middle = random.randint(lower,upper)
             sp = self._partition(lower+1,middle,upper,self.items[lower])
             
             node.threshold = self.distance(self.items[lower],self.items[sp])

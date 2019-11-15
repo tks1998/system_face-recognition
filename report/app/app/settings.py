@@ -123,5 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/upload_img/'
+IMG_URL = '/upload/'
+IMG_ROOT = os.path.join(BASE_DIR,'home/image_missing/')
 MEDIA_ROOT = os.path.join(BASE_DIR,'home/upload_img')
 MEDIA_ROOT_NPY = os.path.join(BASE_DIR,'home/numpy_upload')
+

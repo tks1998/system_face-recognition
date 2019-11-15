@@ -52,24 +52,35 @@ def get_feature(x):
 # tree=None
 # root=None
 def upload(request):
-    # kq = []
-    # uploaded_file = None
-    # if request.method == 'POST':
-    #     uploaded_file = request.FILES['document']
-    #     if uploaded_file:
-    #         fs = FileSystemStorage()
-    #         fs.save(uploaded_file.name,uploaded_file)
-    #         get_feature(uploaded_file.name)
-    #         filename, file_extension = os.path.splitext(uploaded_file.name)
-    #         feature = np.load(config.path_new_numpy)
-    #         if config.VP_buid == False:
-    #             config.VP_buid = True
-    #             config.Tree = process.vptree(config.VP_range)
-    #             config.root = config.Tree.build(0,config.VP_range-1) 
-    #         config.Tree.search(config.Root,feature,5)     
-    #         # for x in tree.heap:
-    #         #     kq.append((x[0],x[1]))
-    return render(request,'pages/upload.html')
+    kq = {}
+    kq1 = []
+    kq2 = []
+    uploaded_file = None
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        if uploaded_file:
+            fs = FileSystemStorage()
+            fs.save(uploaded_file.name,uploaded_file)
+            get_feature(uploaded_file.name)
+            filename, file_extension = os.path.splitext(uploaded_file.name)
+            feature = np.load(config.path_new_numpy)
+            if config.VP_buid == False:
+                config.VP_buid = True
+                config.Tree = process.vptree(config.VP_range)
+                config.root = config.Tree.build(0,config.VP_range-1) 
+            config.Tree.heap =[]
+            config.Tree._tau = 100000000.0
+            config.Tree.search(config.root,feature,5)   
+           
+            for x in config.Tree.heap:
+                kq1.append(x[0])
+                kq2.append(str(x[1])+".png")
+                print(str(x[1])+".png")
+                
+            kq = {"kq1":kq1,"kq2":kq2}
+            config.Tree.heap = []
+
+    return render(request,'pages/upload.html',kq)
  
 # if tree == None:
 # tree = process.vptree(1000)
