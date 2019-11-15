@@ -7,15 +7,19 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-   <div class="col-sm-3">
+   <div class="col-sm-3 mt-4 layer">
       <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg"/>
-            <label for="file">Choose a file</label>
-            <button class="btn btn-info" type="submit" > Search... </button>
+            <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></label>
+            <input placeholder="Nhập k..." type="text" class="knumber btn btn-outline-secondary" name="knumber"/>
+            <button class="btn btn-outline-secondary" type="submit" > Search</button>
       </form>
+      <img class="uploadimg mt-4" width=100% src="" id="preview" class="img-thumbnail">
    </div>
-    
+</div>    
+<div class="row">
+   <div class="col-sm-3"></div>
    <div class="col-sm-9">
       <div class="center">
             {% for ima in kq2 %}
@@ -24,6 +28,24 @@
             {% endfor %}
       </div>
    </div>
- </div>
-
+</div>
+<script>
+var inputs = document.querySelectorAll( '.inputfile' );
+Array.prototype.forEach.call( inputs, function( input )
+{
+	var label	 = input.nextElementSibling;
+	input.addEventListener( 'change', function( e )
+	{
+		var fileName = e.target.value.split( '\\' ).pop();
+      label.innerHTML = fileName;
+      var reader = new FileReader();
+        reader.onload = function(e) {
+          // get loaded data and render thumbnail.
+          document.getElementById("preview").src = e.target.result;
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+	});
+});
+</script>
 {% endblock %}
