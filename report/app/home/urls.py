@@ -7,3 +7,4 @@ urlpatterns = [
     path('upload/',views.upload,name ='upload')
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
 
+urlpatterns += static(settings.IMG_URL,document_root = settings.IMG_ROOT)
