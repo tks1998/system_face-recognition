@@ -9,7 +9,6 @@ def process_img(file_name):
         get request image 
         Call vp-tree and get similarity image 
     """
-    q = {}
     distance = []
     index = []
     filename, file_extension = os.path.splitext(file_name)
@@ -26,9 +25,10 @@ def process_img(file_name):
     while config.Tree.heap:
         x,y=heapq.heappop(config.Tree.heap)
         distance.append(x)
-        index.append(str(y)+".png")
+        index.append(str(y)+".jpg")
         print(x,y)
     config.Tree.heap = []
+    
     """ return json include distance and index """
     return {"distance": distance,
             "name": index}

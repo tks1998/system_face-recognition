@@ -25,7 +25,7 @@ class vptree:
         #print(self.items)
         self.current_Ranking = config.Range_find
         self.heap = []
-        self.path = config.origin_data_npy #config.main_npy os.getcwd()+"\\home\\train\\"
+        self.path = config.origin_data_npy 
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
