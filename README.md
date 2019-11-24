@@ -7,7 +7,9 @@ We assume you had python3.x.x
 
 First step:
 	Install Django with the command line in the terminal or similar tool
-	pip install Django
+	
+		pip install Django
+		
 Second:
 	Running project:
 	You must cd to folder report/app and run  command :
