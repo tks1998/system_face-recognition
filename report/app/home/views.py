@@ -25,9 +25,3 @@ def upload(request):
             process_API.VGG16(uploaded_file.name)
             result = process_request.process_img(uploaded_file.name)
     return render(request,'pages/upload.html',result)
- 
-# if tree == None:
-# tree = process.vptree(1000)
-# root = tree.build(0,999)
-# tree.search(root,feature,5)
-        
