@@ -22,9 +22,8 @@ def upload(request):
         if uploaded_file:
             fs = FileSystemStorage()
             fs.save(uploaded_file.name,uploaded_file)
-            process_API.get_feature(uploaded_file.name)
+            process_API.VGG16(uploaded_file.name)
             result = process_request.process_img(uploaded_file.name)
-
     return render(request,'pages/upload.html',result)
  
 # if tree == None:

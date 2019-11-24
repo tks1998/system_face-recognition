@@ -40,5 +40,28 @@ def get_feature(x):
     with open(config.path_new_numpy, "wb") as image_file2:
       image_file2.write(decoded_string);   
   
-    return 
+    return
+def VGG16(request_name):
+    if config.new_Token is None:
+        get_token()
+    url = 'http://service.mmlab.uit.edu.vn/mmlab_api/vgg16_feature_extract'
+    path_img = os.path.join(settings.MEDIA_ROOT,request_name)
+    filename, file_extension = os.path.splitext(request_name)
+    
+    image = open(path_img, 'rb')
+    image_read = image.read()
+    encoded = base64.encodebytes(image_read)
+    encoded_string = encoded.decode('utf-8')
+    ######################
+    data ={'api_version': '1.0', 'data': {'method': 'vgg16', 'model': '0', 'images': [encoded_string]}}
+    headers = {'Content-type': 'application/json', 
+                    'Authorization': "bearer "+ config.new_Token } 
+    data_json = json.dumps(data)
+    response = requests.post(url, data = data_json, headers=headers)
+    for feature, index in zip(response.json()['data']['predicts'], range(len(response.json()['data']['predicts']))):
+        decoded_string = base64.b64decode(feature)
+        config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+        with open( config.path_new_numpy , "wb") as image_file2:
+            image_file2.write(decoded_string);
+    return  
 
