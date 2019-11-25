@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
-    "/report/app/home/static/",
+    BASE_DIR+"/report/app/home/static/",
 ]
 
 
