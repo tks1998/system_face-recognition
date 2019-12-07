@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import heapq 
-from . import config
+# from . import config
 import random
 import pickle
 
@@ -21,11 +21,11 @@ class vptree:
             Build : O(n*log(n)*(time read file hard disk))
             Search: O(long(n)*time read file hard disk)
     """
-    def __init__(self,maximum):
+    def __init__(self,maximum,origin_data_npy,Range_find):
         self.items = np.arange(1,maximum+1) 
-        self.current_Ranking = config.Range_find
+        self.current_Ranking = Range_find
         self.heap = []
-        self.path = config.origin_data_npy
+        self.path = origin_data_npy
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
@@ -74,7 +74,7 @@ class vptree:
             node.left = self.build(lower+1,middle)
             node.right = self.build(middle+1,upper)
         return node 
-
+    
     def search(self, node = None , target = [] , k = 0 ):
         if node == None:
             return 
@@ -100,3 +100,11 @@ class vptree:
                 self.search(node.right,target,k)
             if dist-self.current_Ranking<=node.threshold:
                 self.search(node.left,target,k)
+"""
+    create pickle_file
+"""
+
+if __name__ == '__main__':
+    Tree = vptree(134,'C:\\Users\\DELL\\Desktop\\system_search\\report\\app\\home\\VGG_feature',1000000000000)
+    with open("model_VGG.pkl", "wb") as f:
+        pickle.dump(Tree, f)
