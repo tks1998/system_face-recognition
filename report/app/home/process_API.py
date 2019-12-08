@@ -5,6 +5,8 @@ import requests
 import json
 from . import config 
 from django.conf import settings
+import cv2
+from skimage.feature import hog, blob_doh, peak_local_max
 def get_token():
     """
         Function Get Token. 
@@ -64,4 +66,20 @@ def VGG16(request_name):
         with open( config.path_new_numpy , "wb") as image_file2:
             image_file2.write(decoded_string);
     return  
-
+def HOG(request_name):
+    filename, file_extension = os.path.splitext(request_name)
+    orient = 32
+    pix_per_cell = 32
+    cell_per_block = 2
+    path_img = os.path.join(settings.MEDIA_ROOT,request_name)
+    img = cv2.imread(path_img)
+    img = cv2.resize(img, (182, 182))
+    feature, hog_image = hog(img, orientations=orient, 
+                                pixels_per_cell=(pix_per_cell, pix_per_cell),
+                                cells_per_block=(cell_per_block, cell_per_block), 
+                                transform_sqrt=True, 
+                                visualize=True, feature_vector=True)
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    with open( config.path_new_numpy , "wb") as image_file2:
+        image_file2.write(feature);
+    

@@ -23,11 +23,11 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
     def __init__(self,maximum):
-        self.items = np.arange(1,maximum+1) # create array 1->maximum+1 -> phan tu 0->10
+        self.items = np.arange(0,maximum) # create array 1->maximum+1 -> phan tu 0->10
         #print(self.items)
         self.current_Ranking = 1000000000000
         self.heap = []
-        self.path = "" 
+        self.path = ""
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data

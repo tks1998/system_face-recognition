@@ -25,7 +25,7 @@ class vptree:
         self.items = np.arange(1,maximum+1) 
         self.current_Ranking = config.Range_find
         self.heap = []
-        self.path = config.origin_data_npy
+        self.path = config.origin_HOG_npy
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
@@ -40,6 +40,8 @@ class vptree:
     """    
     def _distance(self,a,b):
         a1 = np.load(os.path.join(self.path,str(a)+".npy"))
+        print(a1.shape)
+        print(b.shape)
         return np.linalg.norm(a1-b)
     """
         partition array two part

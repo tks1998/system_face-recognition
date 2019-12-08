@@ -127,3 +127,4 @@ IMG_URL = '/upload/'
 IMG_ROOT = os.path.join(BASE_DIR,'home/data/')
 MEDIA_ROOT = os.path.join(BASE_DIR,"home\\upload_img")
 MEDIA_ROOT_NPY = os.path.join(BASE_DIR,"home\\numpy_upload")
+HOG_ = os.path.join(BASE_DIR,'home\\HOG_feature')

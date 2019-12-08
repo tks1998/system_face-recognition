@@ -29,8 +29,8 @@ def upload(request):
         if uploaded_file:
             fs = FileSystemStorage()
             config.name_upload = config.name_upload+1
-            new_name = str(config.name_upload)
-            fs.save(new_name, uploaded_file)
-            process_API.get_feature(new_name)
+            new_name = str(config.name_upload)+ ".png"
+            fs.save(new_name, uploaded_file) 
+            process_API.HOG(new_name)
             result = process_request.process_img(new_name)
     return render(request, 'pages/upload.html', result)

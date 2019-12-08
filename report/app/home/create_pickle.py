@@ -22,10 +22,11 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
     def __init__(self,maximum,origin_data_npy,Range_find):
-        self.items = np.arange(1,maximum+1) 
+        self.items = np.arange(0,maximum) 
         self.current_Ranking = Range_find
         self.heap = []
         self.path = origin_data_npy
+        
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
@@ -105,6 +106,9 @@ class vptree:
 """
 
 if __name__ == '__main__':
-    Tree = vptree(134,'C:\\Users\\DELL\\Desktop\\system_search\\report\\app\\home\\VGG_feature',1000000000000)
-    with open("model_VGG.pkl", "wb") as f:
+    Tree = vptree(1000,'C:\\Users\\DELL\\Desktop\\system_search\\report\\app\\home\\HOG_feature',1000000000000)
+    with open("Tree_model_HOG_famous_human.pkl", "wb") as f:
         pickle.dump(Tree, f)
+    root = Tree.build(0,999)
+    with open("root_model_HOG_famous_human.pkl", "wb") as f:
+        pickle.dump(root, f)
