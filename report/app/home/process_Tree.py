@@ -40,8 +40,7 @@ class vptree:
     """    
     def _distance(self,a,b):
         a1 = np.load(os.path.join(self.path,str(a)+".npy"))
-        print(a1.shape)
-        print(b.shape)
+        
         return np.linalg.norm(a1-b)
     """
         partition array two part

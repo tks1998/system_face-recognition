@@ -6,6 +6,7 @@ import json
 from . import config 
 from django.conf import settings
 import cv2
+import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
 def get_token():
     """
@@ -80,6 +81,6 @@ def HOG(request_name):
                                 transform_sqrt=True, 
                                 visualize=True, feature_vector=True)
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-    with open( config.path_new_numpy , "wb") as image_file2:
-        image_file2.write(feature);
+
+    np.save(config.path_new_numpy,feature)
     
