@@ -12,6 +12,7 @@
          <div class="col-md-6 offset-md-3 ">
             <div class="header-text caption">
                <h2>Search your face</h2>
+               <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
             </div>
             <div id="search-section">
 
@@ -36,26 +37,44 @@
 </div>
 
 <div class="row">
-   <div class="col-sm-3 mt-4 layer">
+   <div class="col-sm-3">
+         <div class="row">
+               <div class="col-md-12">
+                     <div class="section-heading">
+                        <h2>Image you chose</h2>
+                        <p>Chỗ này nữa <br>
+                           Chỗ này nữa</p>
+                     </div>
+                  </div>
       <img class="uploadimg mt-4" width=100% src="" id="preview" class="img-thumbnail">
    </div>
-</div>
-<div class="row">
-   <div class="col-sm-3"></div>
+   </div>
    <div class="col-sm-9">
       <div class="center">
          <div class="row">
+            <div class="col-md-8 offset-md-2">
+               <div class="section-heading">
+                  <h2>The similarity faces</h2>
+                  <p>Chắc phải ghi cái gì vào chỗ này cho đỡ trống <br>
+                     Chắc phải ghi cái gì vào chỗ này cho đỡ trống</p>
+               </div>
+            </div>
             {% for ima in name %}
-            <div class="col-3">
+            <div class="col-3 mb-4">
                <img style="display:block;" width="100%" src="{{ima}}">
-               <center>
-                  {% comment %} this is img's name {% endcomment %}
-               </center>
+               <div class="down-content">
+                  <center>
+                     {{ima}}
+                     {% comment %} this is img's name {% endcomment %}
+                  </center>
+               </div>
+
             </div>
             {% endfor %}
          </div>
       </div>
    </div>
+</div>
 </div>
 <script>
    var inputs = document.querySelectorAll('.inputfile');

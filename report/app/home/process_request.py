@@ -40,7 +40,7 @@ def process_img(file_name):
     """
         test
     """
-    a1 = np.load(os.path.join(config.origin_HOG_npy,str(53)+".npy"))
+
 
     """ search """
     
