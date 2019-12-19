@@ -33,4 +33,5 @@ def upload(request):
             fs.save(new_name, uploaded_file) 
             process_API.HOG(new_name)
             result = process_request.process_img(new_name)
+        
     return render(request, 'pages/upload.html', result)

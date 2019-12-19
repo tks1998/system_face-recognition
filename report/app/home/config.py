@@ -5,7 +5,7 @@ from django.conf import settings
 """
 Start_system = True
 VP_buid = False
-VP_range = 1000
+VP_range = 100
 Root = None
 Tree = None
 Range_find = 100000000.0

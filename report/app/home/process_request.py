@@ -5,7 +5,7 @@ from . import process_Tree
 import numpy as np
 import heapq
 import pickle
-
+from .documents import Information
 
 def process_img(file_name):
     """
@@ -40,7 +40,7 @@ def process_img(file_name):
     """
         test
     """
-    a1 = np.load(os.path.join(config.origin_HOG_npy,str(53)+".npy"))
+    
 
     """ search """
     
@@ -52,7 +52,9 @@ def process_img(file_name):
         index.append(str(y)+".png")
         print(x, y)
     config.Tree.heap = []
-
+    s = Information.search().query("match", name="1")
+    for s1 in s:
+        print("day la ",s1.name,s1.time,s1.description)
     """ return json include distance and index """
     return {
                 "distance"  : distance,
