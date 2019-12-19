@@ -22,7 +22,7 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
     def __init__(self,maximum):
-        self.items = np.arange(1,maximum+1) 
+        self.items = np.arange(0,maximum) 
         self.current_Ranking = config.Range_find
         self.heap = []
         self.path = config.origin_HOG_npy
