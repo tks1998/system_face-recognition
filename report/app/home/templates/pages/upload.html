@@ -6,18 +6,34 @@
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
+<header class="w3-display-container w3-content" style="max-width:1500px;" id="home">
+   <img class="w3-image"
+      src="https://images.unsplash.com/photo-1528820134611-1763ec52025c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1853&q=80"
+      alt="sdfafsdf" width="1500" height="800">
+   <div class="w3-display-middle w3-margin-top">
+      <h1 class="w3-myfont w3-xxlarge w3-text-white">Face-recognition</h1>
+      <em class="w3-text-white">Here is a system help you fine a face in big dataset.<br> Upload the image and wait for the result!</em></p>
+
+      <form method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
+         <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></label>
+         <select class="featureselect btn btn-outline-light">
+            <option value="sift">Sift Feature</option>
+            <option value="face">Face Feature</option>
+            <option value="vgg16" selected>VGG16</option>
+         </select>
+         <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
+         <button class="btn btn-outline-light" type="submit"> Search</button>
+      </form>
+   </div>
+</header>
+
 <div class="row">
    <div class="col-sm-3 mt-4 layer">
-      <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg"/>
-            <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></label>
-            <input placeholder="Nhập k..." type="text" class="knumber btn btn-outline-secondary" name="knumber"/>
-            <button class="btn btn-outline-secondary" type="submit" > Search</button>
-      </form>
       <img class="uploadimg mt-4" width=100% src="" id="preview" class="img-thumbnail">
    </div>
-</div>    
+</div>
 <div class="row">
    <div class="col-sm-3"></div>
    <div class="col-sm-9">
@@ -25,9 +41,9 @@
          <div class="row">
             {% for ima in name %}
             <div class="col-3">
-            <img style="display:block;" width="100%" src="{{ima}}"> 
+               <img style="display:block;" width="100%" src="{{ima}}">
                <center>
-               {% comment %} this is img's name {% endcomment %}
+                  {% comment %} this is img's name {% endcomment %}
                </center>
             </div>
             {% endfor %}
@@ -36,22 +52,20 @@
    </div>
 </div>
 <script>
-var inputs = document.querySelectorAll( '.inputfile' );
-Array.prototype.forEach.call( inputs, function( input )
-{
-	var label	 = input.nextElementSibling;
-	input.addEventListener( 'change', function( e )
-	{
-		var fileName = e.target.value.split( '\\' ).pop();
-      label.innerHTML = fileName;
-      var reader = new FileReader();
-        reader.onload = function(e) {
-          // get loaded data and render thumbnail.
-          document.getElementById("preview").src = e.target.result;
-        };
-        // read the image file as a data URL.
-        reader.readAsDataURL(this.files[0]);
-	});
-});
+   var inputs = document.querySelectorAll('.inputfile');
+   Array.prototype.forEach.call(inputs, function (input) {
+      var label = input.nextElementSibling;
+      input.addEventListener('change', function (e) {
+         var fileName = e.target.value.split('\\').pop();
+         label.innerHTML = fileName;
+         var reader = new FileReader();
+         reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("preview").src = e.target.result;
+         };
+         // read the image file as a data URL.
+         reader.readAsDataURL(this.files[0]);
+      });
+   });
 </script>
 {% endblock %}

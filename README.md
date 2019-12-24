@@ -1,5 +1,5 @@
 # system_face-recognition
-This is the system finds a similarity image. In the current version, we were able to find k-similar images in the 70000 image data set with a time of 0.5s / image. With 70k images, We use about 3MB of RAM and run on Intel Core i7-2620M CPU 2.70 GHz. Supported systems run on ubuntu, macOS, windows. In the future, We will develop it more effective. 
+This is the system finds a similarity images. In the current version, we were able to find k-similar images in the 70000 image data set with a time of 0.5s / image. With 70k images, We use about 3MB of RAM and run on Intel Core i7-2620M CPU 2.70 GHz. Supported systems run on ubuntu, macOS, windows. In the future, We will develop it more effective. 
 
 Easy install:
 
@@ -11,6 +11,22 @@ First step:
 		pip install Django
 		
 Second:
+	Install elasticsearch:
+
+		It depends on your system, I use elasticsearch 7.5.1, elasticsearch dsl 7.1 and python3.x.x
+		elasticsearch>=7.x compatible with 7 < = elasticsearch dsl < 8  
+		and more ...
+		In other words:
+			
+			Install elasticsearch any version you want. You can reference: https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html. 
+			
+			After that, you must find compatible version elasticsearch DSL for your version elasticsearch. 
+		
+			You can refer to for more details elasticsearch-dsl: https://elasticsearch-dsl.readthedocs.io/en/latest/ 
+			
+			Note: It is important, If elastic-search and elastic-search DSL not compatible you will get Serious Errors
+	
+Finally:	
 	Running project:
 	You must cd to folder report/app and run  command :
 		

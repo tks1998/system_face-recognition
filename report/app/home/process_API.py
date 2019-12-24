@@ -5,6 +5,9 @@ import requests
 import json
 from . import config 
 from django.conf import settings
+import cv2
+import numpy as np
+from skimage.feature import hog, blob_doh, peak_local_max
 def get_token():
     """
         Function Get Token. 
@@ -64,4 +67,63 @@ def VGG16(request_name):
         with open( config.path_new_numpy , "wb") as image_file2:
             image_file2.write(decoded_string);
     return  
+def HOG(request_name):
+    filename, file_extension = os.path.splitext(request_name)
+    orient = 32
+    pix_per_cell = 32
+    cell_per_block = 2
+    path_img = os.path.join(settings.MEDIA_ROOT,request_name)
+    img = cv2.imread(path_img)
+    img = cv2.resize(img, (182, 182))
+    feature, hog_image = hog(img, orientations=orient, 
+                                pixels_per_cell=(pix_per_cell, pix_per_cell),
+                                cells_per_block=(cell_per_block, cell_per_block), 
+                                transform_sqrt=True, 
+                                visualize=True, feature_vector=True)
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
 
+    np.save(config.path_new_numpy,feature)
+
+def sift_feature(request_name):
+    
+    # Function detect sift feature
+    # I call detectAndCompute of opencv.
+    # function returns key_point,des
+    # key_point  is position of keypoint
+    # list des have all key point
+    # Each key_point is a 128-dimensional numpy array
+    filename, file_extension = os.path.splitext(request_name)
+    path_img = os.path.join(settings.MEDIA_ROOT,request_name)
+    img = cv2.imread(path_img)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    sift = cv2.xfeatures2d.SIFT_create()
+    key_point, des = sift.detectAndCompute(gray, None)
+
+    key_point_np = np.array(key_point)
+    key_point_des = np.array(des)
+
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    np.save(config.path_new_numpy,key_point_des)
+    
+    return True
+
+def mix_feature_sift_hog(request_name):
+    filename, file_extension = os.path.splitext(request_name)
+
+    current_path = os.path.join(settings.MEDIA_ROOT,request_name)
+    
+    feature_hog = HOG(current_path)
+    
+    feature_sift = np.concatenate(sift_feature(current_path))
+    feature_mix = np.concatenate((feature_hog,feature_sift))
+    len_max = 13000  # maximum mix hog and sift
+    if len(feature_mix)>len_max:
+        feature_mix = feature_mix[:len_max]
+    else:
+        feature_mix = np.pad(feature_mix,(0,len_max-len(feature_mix)),'constant')
+    
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+
+    np.save(config.path_new_numpy,feature_mix)
+
+    return True

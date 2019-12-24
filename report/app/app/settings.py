@@ -27,7 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
-    BASE_DIR+"/report/app/home/static/",
+    os.path.join(BASE_DIR+'static'),
 ]
 
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
+    'django_elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,11 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -125,5 +130,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/upload_img/'
 IMG_URL = '/upload/'
 IMG_ROOT = os.path.join(BASE_DIR,'home/data/')
-MEDIA_ROOT = os.path.join(BASE_DIR,'home/upload_img')
-MEDIA_ROOT_NPY = os.path.join(BASE_DIR,'home/numpy_upload')
+MEDIA_ROOT = os.path.join(BASE_DIR,"home\\upload_img")
+MEDIA_ROOT_NPY = os.path.join(BASE_DIR,"home\\numpy_upload")
+HOG_ = os.path.join(BASE_DIR,'home\\HOG_feature')
