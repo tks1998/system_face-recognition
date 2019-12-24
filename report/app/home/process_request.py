@@ -14,7 +14,7 @@ def process_img(file_name):
     """
     distance = []
     index = []
-
+    
     filename, file_extension = os.path.splitext(file_name)
    
     
@@ -58,6 +58,7 @@ def process_img(file_name):
     """ return json include distance and index """
     return {
                 "distance"  : distance,
-                "name"      : index     
+                "name"      : index,   
+                "origin"    : file_name
             }
             

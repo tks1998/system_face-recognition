@@ -25,6 +25,11 @@ def upload(request):
     result = {}
     uploaded_file = None
     if request.method == 'POST':
+        k_number = request.POST.get("knumber")
+        print(111111111111111111111, k_number)
+        if (k_number is not None and k_number !='' ):
+            config.K_similarity = int(k_number)
+         
         uploaded_file = request.FILES['document']
         if uploaded_file:
             fs = FileSystemStorage()

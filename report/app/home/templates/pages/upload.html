@@ -1,55 +1,80 @@
 {% extends "pages/main.html" %}
 
-{% block title %}Trang chủ{% endblock %}
+{% block title %}Search{% endblock %}
 {% block style %}
 {% load static %}
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-<header class="w3-display-container w3-content" style="max-width:1500px;" id="home">
-   <img class="w3-image"
-      src="https://images.unsplash.com/photo-1528820134611-1763ec52025c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1853&q=80"
-      alt="sdfafsdf" width="1500" height="800">
-   <div class="w3-display-middle w3-margin-top">
-      <h1 class="w3-myfont w3-xxlarge w3-text-white">Face-recognition</h1>
-      <em class="w3-text-white">Here is a system help you fine a face in big dataset.<br> Upload the image and wait for the result!</em></p>
+<div class="banner">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-6 offset-md-3 ">
+            <div class="header-text caption">
+               <h2>Search your face</h2>
+               <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
+            </div>
+            <div id="search-section">
 
-      <form method="post" enctype="multipart/form-data">
-         {% csrf_token %}
-         <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
-         <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3" aria-hidden="true"></i></label>
-         <select class="featureselect btn btn-outline-light">
-            <option value="sift">Sift Feature</option>
-            <option value="face">Face Feature</option>
-            <option value="vgg16" selected>VGG16</option>
-         </select>
-         <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
-         <button class="btn btn-outline-light" type="submit"> Search</button>
-      </form>
-   </div>
-</header>
+               <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
+                  <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
+                        aria-hidden="true"></i></label>
+                  <select class="featureselect btn btn-outline-light">
+                     <option value="sift">Sift Feature</option>
+                     <option value="face">Face Feature</option>
+                     <option value="vgg16" selected>VGG16</option>
+                  </select>
+                  <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
+                  <button class="btn btn-outline-light" type="submit"> Search</button>
+               </form>
 
-<div class="row">
-   <div class="col-sm-3 mt-4 layer">
-      <img class="uploadimg mt-4" width=100% src="" id="preview" class="img-thumbnail">
+            </div>
+         </div>
+      </div>
    </div>
 </div>
+
 <div class="row">
-   <div class="col-sm-3"></div>
+   <div class="col-sm-3">
+         <div class="row">
+               <div class="col-md-12">
+                     <div class="section-heading">
+                        <h2>Image you chose</h2>
+                        <p>Chỗ này nữa <br>
+                           Chỗ này nữa</p>
+                     </div>
+                  </div>
+      <img class="uploadimg mt-4" width=100% src="../upload_img/{{origin}}" id="preview" class="img-thumbnail">
+   </div>
+   </div>
    <div class="col-sm-9">
       <div class="center">
          <div class="row">
+            <div class="col-md-8 offset-md-2">
+               <div class="section-heading">
+                  <h2>The similarity faces</h2>
+                  <p>Chắc phải ghi cái gì vào chỗ này cho đỡ trống <br>
+                     Chắc phải ghi cái gì vào chỗ này cho đỡ trống</p>
+               </div>
+            </div>
             {% for ima in name %}
-            <div class="col-3">
+            <div class="col-3 mb-4">
                <img style="display:block;" width="100%" src="{{ima}}">
-               <center>
-                  {% comment %} this is img's name {% endcomment %}
-               </center>
+               <div class="down-content">
+                  <center>
+                     {{ima}}
+                     {% comment %} this is img's name {% endcomment %}
+                  </center>
+               </div>
+
             </div>
             {% endfor %}
          </div>
       </div>
    </div>
+</div>
 </div>
 <script>
    var inputs = document.querySelectorAll('.inputfile');
