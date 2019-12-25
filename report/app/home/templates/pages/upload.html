@@ -21,10 +21,11 @@
                   <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
                   <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
                         aria-hidden="true"></i></label>
-                  <select class="featureselect btn btn-outline-light">
-                     <option value="sift">Sift Feature</option>
-                     <option value="face">Face Feature</option>
-                     <option value="vgg16" selected>VGG16</option>
+                  <select class="featureselect btn btn-outline-light" name="choose_method">
+                     <option value="1" selected>Hog</option>
+                     <option value="2" >Sift Feature</option>
+                     <option value="3" >Mix Sift_n_Hog</option>
+                     <option value="4">VGG16</option>
                   </select>
                   <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
                   <button class="btn btn-outline-light" type="submit"> Search</button>
@@ -59,12 +60,12 @@
                      Chắc phải ghi cái gì vào chỗ này cho đỡ trống</p>
                </div>
             </div>
-            {% for ima in name %}
+            {% for infor in information %}
             <div class="col-3 mb-4">
-               <img style="display:block;" width="100%" src="{{ima}}">
+               <img style="display:block;" width="100%" src="{{infor.img}}">
                <div class="down-content">
                   <center>
-                     {{ima}}
+                     {{infor.name}} : {{infor.description}}
                      {% comment %} this is img's name {% endcomment %}
                   </center>
                </div>

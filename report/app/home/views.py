@@ -26,17 +26,28 @@ def upload(request):
     uploaded_file = None
     if request.method == 'POST':
         k_number = request.POST.get("knumber")
-        print(111111111111111111111, k_number)
         if (k_number is not None and k_number !='' ):
             config.K_similarity = int(k_number)
-         
+        choose_method = int(request.POST.get("choose_method"))
+        # Format select method:
+        # 1 = Hog
+        # 2 = Sift feature
+        # 3 = mix_feature_sift_hog
+        # 4 = VGG16
         uploaded_file = request.FILES['document']
         if uploaded_file:
             fs = FileSystemStorage()
             config.name_upload = config.name_upload+1
             new_name = str(config.name_upload)+ ".png"
             fs.save(new_name, uploaded_file) 
-            process_API.HOG(new_name)
+            if choose_method == 1:
+                process_API.HOG(new_name)
+            # if choose_method == 2:
+            #     process_API.sift_feature(new_name)
+            # if choose_method == 3:
+            #     process_API.mix_feature_sift_hog(new_name)
+            # if choose_method == 4:
+            #     process_API.mix_feature_sift_hog(new_name)
             result = process_request.process_img(new_name)
         
     return render(request, 'pages/upload.html', result)

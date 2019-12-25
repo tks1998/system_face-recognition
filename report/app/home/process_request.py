@@ -14,7 +14,8 @@ def process_img(file_name):
     """
     distance = []
     index = []
-    
+    infors = []
+
     filename, file_extension = os.path.splitext(file_name)
    
     
@@ -50,16 +51,24 @@ def process_img(file_name):
     while config.Tree.heap:
         x, y = heapq.heappop(config.Tree.heap)
         distance.append(x)
-        index.append(str(y)+".png")
-        print(x, y)
+        # Nếu up dữ liệu lên thì set 1 = y
+        s = Information.search().query("match", name=str(1))
+        t = None
+        for s1 in s:
+            t = s1
+            break
+        print("day la ",  t.name, t.description)
+        infors.append({
+            "img" : str(y)+".png",
+            "name" : t.name,
+            "description" : t.description
+        })
     config.Tree.heap = []
-    s = Information.search().query("match", name="1")
-    for s1 in s:
-        print("day la ",s1.name,s1.time,s1.description)
+
     """ return json include distance and index """
     return {
+                "information" : infors,
                 "distance"  : distance,
-                "name"      : index,   
                 "origin"    : file_name
             }
             
