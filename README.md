@@ -8,7 +8,8 @@ We assume you had python3.x.x
 First step:
 	Install Django with the command line in the terminal or similar tool
 	
-		pip install Django
+		pip install Django == 2.2.6
+	note: My project was compatible with Django 2.2.6. If you want to change it you have probability error
 		
 Second:
 	Install elasticsearch:
