@@ -5,11 +5,7 @@ from django.conf import settings
 """
 Start_system = True
 VP_buid = False
-<<<<<<< HEAD
-VP_range = 100
-=======
-VP_range = 10 #number of images in dataset
->>>>>>> feature/front-end
+VP_range = 50
 Root = None
 Tree = None
 Range_find = 100000000.0
