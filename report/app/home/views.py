@@ -49,5 +49,4 @@ def upload(request):
             # if choose_method == 4:
             #     process_API.mix_feature_sift_hog(new_name)
             result = process_request.process_img(new_name)
-        
     return render(request, 'pages/upload.html', result)

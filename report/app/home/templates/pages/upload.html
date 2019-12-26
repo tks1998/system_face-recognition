@@ -2,51 +2,49 @@
 
 {% block title %}Search{% endblock %}
 {% block style %}
+<style>
+.output_img{
+   margin: 10px 10px 10px 10px;
+	padding-top: 100px;
+}
+</style>
+
 {% load static %}
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
 
-<div class="row">
-   <div class="col-sm-3">
-      <div class="row">
-         <div class="col-md-12">
-            <div class="section-heading">
-               <h2>Image you chose</h2>
-               <p>Chỗ này nữa <br>
-                  Chỗ này nữa</p>
-            </div>
-         </div>
-         <img class="uploadimg mt-4" width=100% src="../upload_img/{{origin}}" id="preview" class="img-thumbnail">
-      </div>
-   </div>
-   <div class="col-sm-9">
-      <div class="center">
-         <div class="row">
-            <div class="col-md-8 offset-md-2">
-               <div class="section-heading">
-                  <h2>The similarity faces</h2>
-                  <p>Chắc phải ghi cái gì vào chỗ này cho đỡ trống <br>
-                     Chắc phải ghi cái gì vào chỗ này cho đỡ trống</p>
-               </div>
-            </div>
-            {% for infor in information %}
-            <div class="col-3 mb-4">
-               <img style="display:block;" width="100%" src="{{infor.img}}">
-               <div class="down-content">
-                  <center>
-                     {{infor.name}} : {{infor.description}}
-                     {% comment %} this is img's name {% endcomment %}
-                  </center>
-               </div>
 
+<div class="output_img">
+   <div class="row">
+      <div class="col-sm-3">
+         <center>
+            <h3>Request - Image</h3>
+         </center>
+         
+         <img class="uploadimg" width=100% src="../upload_img/{{origin}}" id="preview" class="img-thumbnail">
+      </div>
+      <div class="col-sm-9">
+         <div class="center">
+            <div class="row">
+               {% for infor in information %}
+               <div class="col-3 mb-4">
+                  <img style="display:block;" width="100%" src="{{infor.img}}">
+                  <div class="down-content">
+                     <center>
+                        {{infor.name}} : {{infor.description}}
+                        {% comment %} this is img's name {% endcomment %}
+                     </center>
+                  </div>
+
+               </div>
+               {% endfor %}
             </div>
-            {% endfor %}
          </div>
       </div>
    </div>
 </div>
-</div>
+
 <script>
    var inputs = document.querySelectorAll('.inputfile');
    Array.prototype.forEach.call(inputs, function (input) {
@@ -64,4 +62,17 @@
       });
    });
 </script>
+
+{% if origin is not None %}   
+<script type="text/javascript">
+
+   console.log(1111)
+    $('.output_img')[0].scrollIntoView({
+    behavior: "smooth", // or "auto" or "instant"
+    block: "start" // or "end"
+   });
+</script>   
+
+{% endif %}
+
 {% endblock %}

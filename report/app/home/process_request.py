@@ -57,14 +57,13 @@ def process_img(file_name):
         for s1 in s:
             t = s1
             break
-        print("day la ",  t.name, t.description)
+        # print("day la ",  t.name, t.description)
         infors.append({
             "img" : str(y)+".png",
             "name" : t.name,
             "description" : t.description
         })
     config.Tree.heap = []
-
     """ return json include distance and index """
     return {
                 "information" : infors,
