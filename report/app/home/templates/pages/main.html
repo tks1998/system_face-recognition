@@ -17,13 +17,48 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     {% block style %}{% endblock %}
+    {% load static %}
+    <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     {% include "navbar.html" %}
-    {% block content %}
-
-    {% endblock %}
+    
+    <div class="banner">
+        <div class="container">
+           <div class="row">
+              <div class="col-md-6 offset-md-3 ">
+                 <div class="header-text caption">
+                    <h2>Search your face</h2>
+                    <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
+                 </div>
+                 <div id="search-section">
+     
+                    <form method="post" enctype="multipart/form-data">
+                       {% csrf_token %}
+                       <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
+                       <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
+                             aria-hidden="true"></i></label>
+                       <select class="featureselect btn btn-outline-light" name="choose_method">
+                          <option value="1" selected>Hog</option>
+                          <option value="2">Sift Feature</option>
+                          <option value="3">Mix Sift_n_Hog</option>
+                          <option value="4">VGG16</option>
+                       </select>
+                       <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
+                       <button class="btn btn-outline-light" type="submit"> Search</button>
+                    </form>
+     
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
 </body>
 
 </html>
