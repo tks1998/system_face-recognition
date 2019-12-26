@@ -5,7 +5,7 @@ from . import process_Tree
 import numpy as np
 import heapq
 import pickle
-
+from .documents import Information
 
 def process_img(file_name):
     """
@@ -14,6 +14,7 @@ def process_img(file_name):
     """
     distance = []
     index = []
+    infors = []
 
     filename, file_extension = os.path.splitext(file_name)
    
@@ -23,6 +24,7 @@ def process_img(file_name):
         config.VP_buid = True
         config.Tree = process_Tree.vptree(config.VP_range)
         config.Root = config.Tree.build(0,config.VP_range-1) 
+        print("***************************************************")
             
         # path_Tree = os.path.join(settings.BASE_DIR, 'home\\model\\Tree_model_HOG_famous_human.pkl')
         # path_root = os.path.join(settings.BASE_DIR, 'home\\model\\root_model_HOG_famous_human.pkl')
@@ -40,7 +42,7 @@ def process_img(file_name):
     """
         test
     """
-    a1 = np.load(os.path.join(config.origin_HOG_npy,str(53)+".npy"))
+    
 
     """ search """
     
@@ -49,13 +51,24 @@ def process_img(file_name):
     while config.Tree.heap:
         x, y = heapq.heappop(config.Tree.heap)
         distance.append(x)
-        index.append(str(y)+".png")
-        print(x, y)
+        # Nếu up dữ liệu lên thì set 1 = y
+        s = Information.search().query("match", name=str(1))
+        t = None
+        for s1 in s:
+            t = s1
+            break
+        print("day la ",  t.name, t.description)
+        infors.append({
+            "img" : str(y)+".png",
+            "name" : t.name,
+            "description" : t.description
+        })
     config.Tree.heap = []
 
     """ return json include distance and index """
     return {
+                "information" : infors,
                 "distance"  : distance,
-                "name"      : index     
+                "origin"    : file_name
             }
             
