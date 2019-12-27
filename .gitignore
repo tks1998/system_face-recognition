@@ -150,3 +150,6 @@ pip-selfcheck.json
 .history
 
 # End of https://www.gitignore.io/api/django,virtualenv,visualstudiocode
+report/app/home/upload_img/
+
+report/app/home/numpy_upload/
