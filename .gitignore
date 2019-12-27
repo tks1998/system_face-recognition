@@ -153,3 +153,5 @@ pip-selfcheck.json
 report/app/home/upload_img/
 
 report/app/home/numpy_upload/
+
+report/app/home/model/

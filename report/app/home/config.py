@@ -17,4 +17,9 @@ path_new_numpy = None
 origin_data_npy =os.path.join(settings.BASE_DIR,'home/VGG_feature/')
 origin_HOG_npy = os.path.join(settings.BASE_DIR,'home/HOG_feature/')
 origin_data_img =settings.IMG_ROOT
-
+origin_facenet_npy = os.path.join(settings.BASE_DIR,'home/numpy_train_data')
+origin_facenet_model = os.path.join(settings.BASE_DIR,'home/model/facenet_keras.h5')
+"""
+    MODEL DEEPLEARNING FROM KERAS 
+"""
+model_facenet = None

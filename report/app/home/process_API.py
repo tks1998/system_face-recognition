@@ -8,6 +8,9 @@ from django.conf import settings
 import cv2
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
+from keras.models import load_model
+from PIL import Image
+import keras
 def get_token():
     """
         Function Get Token. 
@@ -20,6 +23,7 @@ def get_token():
     response = requests.post(url_token, data = data_json, headers=headers)
     config.new_Token = response.json()['token']
     return True 
+
 def get_feature(x):
     """ 
         In this function, I use API "get feature" support by mmlab UIT. 
@@ -127,3 +131,36 @@ def mix_feature_sift_hog(request_name):
     np.save(config.path_new_numpy,feature_mix)
 
     return True
+
+def extract_face(filename, required_size=(160, 160)):
+	face = cv2.imread(filename)
+	image = Image.fromarray(face)
+	image = image.resize(required_size)
+	face_array = np.asarray(image)
+	return face_array
+
+def facenet(request_name):
+    filename, file_extension = os.path.splitext(request_name)
+    PATH_IMG = os.path.join(settings.MEDIA_ROOT,request_name)
+    
+
+    model_name = 'facenet_keras'
+
+
+
+    image = open(PATH_IMG, 'rb')
+    image_read = image.read()
+    encoded = base64.encodebytes(image_read)
+    encoded_string = encoded.decode('utf-8')
+
+    url_feature = 'http://192.168.20.170:3000/facenet/image/'
+    data = {'data': {
+            'model': model_name,
+            'image_encoded': encoded_string
+            }}
+    headers = {'Content-type': 'application/json'}
+    data_json = json.dumps(data)
+    response = requests.post(url_feature, data=data_json, headers=headers)
+
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    np.save(config.path_new_numpy,response.json()['data'][0]['feature'])

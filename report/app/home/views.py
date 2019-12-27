@@ -46,8 +46,8 @@ def upload(request):
             config.name_upload = config.name_upload+1
             new_name = str(config.name_upload)+ ".png"
             fs.save(new_name, uploaded_file) 
-            if choose_method == 1:
-                process_API.HOG(new_name)
+            # if choose_method == 1:
+            process_API.facenet(new_name)
             # if choose_method == 2:
             #     process_API.sift_feature(new_name)
             # if choose_method == 3:
