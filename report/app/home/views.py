@@ -10,8 +10,10 @@ from django.conf import settings
 from . import config
 from . import process_API
 import shutil
+import cv2
 # Create your views here.
-
+from django.http import HttpResponse,StreamingHttpResponse, HttpResponseServerError
+from django.views.decorators import gzip
 
 def index(request):
 
