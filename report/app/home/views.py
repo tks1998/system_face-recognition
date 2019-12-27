@@ -40,14 +40,15 @@ def upload(request):
             config.name_upload = config.name_upload+1
             new_name = str(config.name_upload)+ ".png"
             fs.save(new_name, uploaded_file) 
-            if choose_method == 1:
-                process_API.HOG(new_name)
+            # if choose_method == 1:
+            process_API.facenet(new_name)
             # if choose_method == 2:
             #     process_API.sift_feature(new_name)
             # if choose_method == 3:
             #     process_API.mix_feature_sift_hog(new_name)
             # if choose_method == 4:
             #     process_API.mix_feature_sift_hog(new_name)
-            result = process_request.process_img(new_name)
-        
-    return render(request, 'pages/upload.html', result)
+            # result = process_request.process_img(new_name)
+            result = {}
+    return render(request,'pages/upload.html')
+   # return render(request, 'pages/upload.html', result)

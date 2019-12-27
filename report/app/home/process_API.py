@@ -8,6 +8,9 @@ from django.conf import settings
 import cv2
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
+from keras.models import load_model
+from PIL import Image
+import keras
 def get_token():
     """
         Function Get Token. 
@@ -20,6 +23,7 @@ def get_token():
     response = requests.post(url_token, data = data_json, headers=headers)
     config.new_Token = response.json()['token']
     return True 
+
 def get_feature(x):
     """ 
         In this function, I use API "get feature" support by mmlab UIT. 
@@ -127,3 +131,42 @@ def mix_feature_sift_hog(request_name):
     np.save(config.path_new_numpy,feature_mix)
 
     return True
+
+def extract_face(filename, required_size=(160, 160)):
+	face = cv2.imread(filename)
+	image = Image.fromarray(face)
+	image = image.resize(required_size)
+	face_array = np.asarray(image)
+	return face_array
+
+def facenet(request_name):
+    # if config.model_facenet == None:
+    #     print("da vao")
+    #     config.model_facenet = 1
+    
+    #     model_facenet = load_model(path_h5)
+
+    #path_h5 = os.path.join("home\\facenet_keras.h5")
+    print("*******************")
+    model = keras.models.load_model(config.origin_facenet_model)
+    print("da load xong")
+    # required_size=(160, 160)
+    # filename = os.path.splitext(request_name)[0]
+    # current_path = os.path.join(settings.MEDIA_ROOT,filename)
+    
+    # face = cv2.imread(current_path)
+    # image = Image.fromarray(face)
+    # image = image.resize(required_size)
+    # face_array = np.asarray(image)
+    
+    # face_pixels = face_array.astype('float32')
+    
+    # mean, std = face_pixels.mean(), face_pixels.std()
+    # face_pixels = (face_pixels - mean) / std
+ 
+    # samples = np.expand_dims(face_pixels, axis=0)
+    # yhat = config.model_facenet.predict(samples)
+
+    # config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+
+    # np.save(config.path_new_numpy, yhat[0])

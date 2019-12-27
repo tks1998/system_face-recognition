@@ -29,7 +29,7 @@ class vptree:
         self.items = np.arange(0, maximum+1)
         self.current_Ranking = config.Range_find
         self.heap = []
-        self.path = config.origin_HOG_npy
+        self.path = config.origin_facenet_npy
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
