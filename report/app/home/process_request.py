@@ -6,8 +6,11 @@ import numpy as np
 import heapq
 import pickle
 from .documents import Information
-
-def process_img(file_name):
+_dict = {    
+    "1":config.origin_HOG_npy,
+    "5":config.origin_facenet_npy
+}
+def process_img(file_name,option):
     """
         get request image 
         Call vp-tree and get similarity image 
@@ -22,10 +25,8 @@ def process_img(file_name):
     feature = np.load(os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy"))
     if config.VP_buid == False:
         config.VP_buid = True
-        config.Tree = process_Tree.vptree(config.VP_range)
-        config.Root = config.Tree.build(0,config.VP_range-1) 
-        print("***************************************************")
-            
+        config.Tree = process_Tree.vptree(config.VP_range,_dict[option])
+        config.Root = config.Tree.build(0,config.VP_range-1)             
         # path_Tree = os.path.join(settings.BASE_DIR, 'home\\model\\Tree_model_HOG_famous_human.pkl')
         # path_root = os.path.join(settings.BASE_DIR, 'home\\model\\root_model_HOG_famous_human.pkl')
         # loadling1 = open(path_Tree, "rb")
