@@ -140,33 +140,27 @@ def extract_face(filename, required_size=(160, 160)):
 	return face_array
 
 def facenet(request_name):
-    # if config.model_facenet == None:
-    #     print("da vao")
-    #     config.model_facenet = 1
+    filename, file_extension = os.path.splitext(request_name)
+    PATH_IMG = os.path.join(settings.MEDIA_ROOT,request_name)
     
-    #     model_facenet = load_model(path_h5)
 
-    #path_h5 = os.path.join("home\\facenet_keras.h5")
-    print("*******************")
-    model = keras.models.load_model(config.origin_facenet_model)
-    print("da load xong")
-    # required_size=(160, 160)
-    # filename = os.path.splitext(request_name)[0]
-    # current_path = os.path.join(settings.MEDIA_ROOT,filename)
-    
-    # face = cv2.imread(current_path)
-    # image = Image.fromarray(face)
-    # image = image.resize(required_size)
-    # face_array = np.asarray(image)
-    
-    # face_pixels = face_array.astype('float32')
-    
-    # mean, std = face_pixels.mean(), face_pixels.std()
-    # face_pixels = (face_pixels - mean) / std
- 
-    # samples = np.expand_dims(face_pixels, axis=0)
-    # yhat = config.model_facenet.predict(samples)
+    model_name = 'facenet_keras'
 
-    # config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
 
-    # np.save(config.path_new_numpy, yhat[0])
+
+    image = open(PATH_IMG, 'rb')
+    image_read = image.read()
+    encoded = base64.encodebytes(image_read)
+    encoded_string = encoded.decode('utf-8')
+
+    url_feature = 'http://192.168.20.170:3000/facenet/image/'
+    data = {'data': {
+            'model': model_name,
+            'image_encoded': encoded_string
+            }}
+    headers = {'Content-type': 'application/json'}
+    data_json = json.dumps(data)
+    response = requests.post(url_feature, data=data_json, headers=headers)
+
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    np.save(config.path_new_numpy,response.json()['data'][0]['feature'])
