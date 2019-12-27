@@ -17,6 +17,16 @@ def index(request):
 
     return render(request, 'pages/home.html')
 
+def evaluation(request):
+    f = open("home\\label\\label_of_famous_people.txt", "r")
+    t = f.read()
+    labels = t.split()
+    for i in range(0,len(labels)):
+        labels[i] = labels[i].split(":")
+    
+    
+
+    return render(request, 'pages/evaluation.html')
 
 def upload(request):
     if config.Start_system:
@@ -29,11 +39,7 @@ def upload(request):
         if (k_number is not None and k_number !='' ):
             config.K_similarity = int(k_number)
         choose_method = int(request.POST.get("choose_method"))
-        # Format select method:
-        # 1 = Hog
-        # 2 = Sift feature
-        # 3 = mix_feature_sift_hog
-        # 4 = VGG16
+        # Format select method: 1 = Hog, 2 = Sift feature, 3 = mix_feature_sift_hog, 4 = VGG16
         uploaded_file = request.FILES['document']
         if uploaded_file:
             fs = FileSystemStorage()
