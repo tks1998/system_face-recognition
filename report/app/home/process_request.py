@@ -25,7 +25,7 @@ def process_img(file_name,option):
     feature = np.load(os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy"))
     if config.VP_buid == False:
         config.VP_buid = True
-        config.Tree = process_Tree.vptree(config.VP_range,_dict[option])
+        config.Tree = process_Tree.vptree(config.VP_range,_dict[option], config.type_distance)
         config.Root = config.Tree.build(0,config.VP_range-1)             
         # path_Tree = os.path.join(settings.BASE_DIR, 'home\\model\\Tree_model_HOG_famous_human.pkl')
         # path_root = os.path.join(settings.BASE_DIR, 'home\\model\\root_model_HOG_famous_human.pkl')

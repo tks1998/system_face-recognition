@@ -41,6 +41,7 @@ def upload(request):
         if (k_number is not None and k_number !='' ):
             config.K_similarity = int(k_number)
         choose_method = request.POST.get("choose_method")
+        choose_distance = request.POST.get("choose_distance")
         # Format select method: 1 = Hog, 2 = Sift feature, 3 = mix_feature_sift_hog, 4 = VGG16
         uploaded_file = request.FILES['document']
         if uploaded_file:
@@ -58,6 +59,7 @@ def upload(request):
             #     process_API.mix_feature_sift_hog(new_name)
             # if choose_method == 4:
             #     process_API.mix_feature_sift_hog(new_name)
+            config.type_distance == int(choose_distance)
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
 

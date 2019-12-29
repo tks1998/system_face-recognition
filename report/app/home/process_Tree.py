@@ -4,7 +4,7 @@ import heapq
 from . import config
 import random
 import pickle
-
+from scipy.spatial.distance import cosine
 
 class Node:
     """ Node in vp-tree """
@@ -25,11 +25,12 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
 
-    def __init__(self, maximum,path):
+    def __init__(self, maximum,path, type_distance = 1):
         self.items = np.arange(0, maximum+1)
         self.current_Ranking = config.Range_find
         self.heap = []
         self.path = path
+        self.type_distance = type_distance
     """ 
         Implement distance with Euclid distance 
         between feature and file.npy in data
@@ -38,7 +39,10 @@ class vptree:
     def distance(self, a, b):
         a1 = np.load(os.path.join(self.path, str(a)+".npy"))  # path
         a2 = np.load(os.path.join(self.path, str(b)+".npy"))
-        return np.linalg.norm(a1-a2)
+        if self.type_distance == 1:
+            return np.linalg.norm(a1-a2)
+        else:
+            return cosine(a1, a2)
     """ 
         Impelement distance with Euclid distance 
         between feature and data npy
@@ -46,8 +50,10 @@ class vptree:
 
     def _distance(self, a, b):
         a1 = np.load(os.path.join(self.path, str(a)+".npy"))
-
-        return np.linalg.norm(a1-b)
+        if self.type_distance == 1:
+            return np.linalg.norm(a1-b)
+        else:
+            return cosine(a1, b)
     """
         partition array two part
         In the worst-case, It calls about n times
