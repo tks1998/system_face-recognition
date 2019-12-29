@@ -8,9 +8,7 @@ from django.conf import settings
 import cv2
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
-from keras.models import load_model
 from PIL import Image
-import keras
 def get_token():
     """
         Function Get Token. 
@@ -84,6 +82,7 @@ def HOG(request_name):
                                 cells_per_block=(cell_per_block, cell_per_block), 
                                 transform_sqrt=True, 
                                 visualize=True, feature_vector=True)
+    feature = feature.astype(np.float32)
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
 
     np.save(config.path_new_numpy,feature)
