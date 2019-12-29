@@ -8,9 +8,7 @@ from django.conf import settings
 import cv2
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
-from keras.models import load_model
 from PIL import Image
-import keras
 def get_token():
     """
         Function Get Token. 

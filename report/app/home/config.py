@@ -23,3 +23,4 @@ origin_facenet_npy = os.path.join(settings.BASE_DIR,'home/numpy_train_data')
     MODEL DEEPLEARNING FROM KERAS 
 """
 model_facenet = None
+type_distance = 1
