@@ -25,8 +25,8 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
 
-    def __init__(self, maximum,path):
-        self.items = np.arange(0, maximum+1)
+    def __init__(self, maximum, path):
+        self.items = np.arange(0, maximum)
         self.current_Ranking = config.Range_find
         self.heap = []
         self.path = path
@@ -69,19 +69,18 @@ class vptree:
         return (i+1)
 
     def build(self, lower, upper):
-        if lower == upper:
+        if lower > upper:
             return None
         node = Node()
         node.index = lower
-        if upper-lower > 1:
-            middle = random.randint(lower, upper)
+        
+        if upper-lower > 0:
+            middle = random.randint(lower+1, upper)
             sp = self._partition(lower+1, middle, upper, self.items[lower])
 
             node.threshold = self.distance(self.items[lower], self.items[sp])
-
-            node.index = lower
-            node.left = self.build(lower+1, middle)
-            node.right = self.build(middle+1, upper)
+            node.left = self.build(lower+1, sp)
+            node.right = self.build(sp+1, upper)
         return node
 
     def search(self, node=None, target=[], k=0):
@@ -97,7 +96,7 @@ class vptree:
 
             heapq.heappush(self.heap, (dist, self.items[node.index]))
             if len(self.heap) == k:
-                self.current_Ranking = self.heap[len(self.heap)-1][0]
+                self.current_Ranking = heapq.nlargest(1, self.heap)[0][0]
         if node.left == None and node.right == None:
             return
         if dist < node.threshold:

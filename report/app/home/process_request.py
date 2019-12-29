@@ -23,6 +23,7 @@ def process_img(file_name,option):
    
     
     feature = np.load(os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy"))
+   
     if config.VP_buid == False:
         config.VP_buid = True
         config.Tree = process_Tree.vptree(config.VP_range,_dict[option])
@@ -46,12 +47,12 @@ def process_img(file_name,option):
     
 
     """ search """
-    
     config.Tree.search(config.Root, feature, config.K_similarity)
     
     while config.Tree.heap:
         x, y = heapq.heappop(config.Tree.heap)
         distance.append(x)
+        print(x,y)
         # Nếu up dữ liệu lên thì set 1 = y
         s = Information.search().query("match", name=str(1))
         t = None

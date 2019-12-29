@@ -84,6 +84,7 @@ def HOG(request_name):
                                 cells_per_block=(cell_per_block, cell_per_block), 
                                 transform_sqrt=True, 
                                 visualize=True, feature_vector=True)
+    feature = feature.astype(np.float32)
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
 
     np.save(config.path_new_numpy,feature)
