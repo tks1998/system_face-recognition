@@ -5,7 +5,7 @@ import requests
 import json
 from . import config 
 from django.conf import settings
-import cv2
+import cv2 as cv
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
 from PIL import Image
@@ -75,8 +75,8 @@ def HOG(request_name):
     pix_per_cell = 32
     cell_per_block = 2
     path_img = os.path.join(settings.MEDIA_ROOT,request_name)
-    img = cv2.imread(path_img)
-    img = cv2.resize(img, (182, 182))
+    img = cv.imread(path_img)
+    img = cv.resize(img, (182, 182))
     feature, hog_image = hog(img, orientations=orient, 
                                 pixels_per_cell=(pix_per_cell, pix_per_cell),
                                 cells_per_block=(cell_per_block, cell_per_block), 
@@ -97,16 +97,25 @@ def sift_feature(request_name):
     # Each key_point is a 128-dimensional numpy array
     filename, file_extension = os.path.splitext(request_name)
     path_img = os.path.join(settings.MEDIA_ROOT,request_name)
-    img = cv2.imread(path_img)
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    sift = cv2.xfeatures2d.SIFT_create()
+    
+    img = cv.imread(path_img)
+    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    sift = cv.xfeatures2d.SIFT_create()
     key_point, des = sift.detectAndCompute(gray, None)
 
     key_point_np = np.array(key_point)
     key_point_des = np.array(des)
 
+    feature_sift = np.concatenate(key_point_des)   
+    len_max_sift =13000
+    if len(feature_sift)>len_max_sift:
+            feature_sift = feature_sift[:len_max_sift]
+    else:
+        feature_sift = np.pad(feature_sift,(0,len_max_sift-len(feature_sift)),'constant')
+
+   
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-    np.save(config.path_new_numpy,key_point_des)
+    np.save(config.path_new_numpy,feature_sift)
     
     return True
 
@@ -132,7 +141,7 @@ def mix_feature_sift_hog(request_name):
     return True
 
 def extract_face(filename, required_size=(160, 160)):
-	face = cv2.imread(filename)
+	face = cv.imread(filename)
 	image = Image.fromarray(face)
 	image = image.resize(required_size)
 	face_array = np.asarray(image)
@@ -163,3 +172,5 @@ def facenet(request_name):
 
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
     np.save(config.path_new_numpy,response.json()['data'][0]['feature'])
+def resnet():
+    pass

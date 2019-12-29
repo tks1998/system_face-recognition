@@ -8,6 +8,7 @@ import pickle
 from .documents import Information
 _dict = {    
     "1":config.origin_HOG_npy,
+    "2":config.origin_sift_npy,
     "5":config.origin_facenet_npy
 }
 def process_img(file_name,option):
