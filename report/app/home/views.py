@@ -67,7 +67,7 @@ def upload(request):
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
 def get_frame():
-    camera =cv2.VideoCapture(-1)
+    camera =cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'XVID') 
     url_detec = "http://192.168.20.170:3000/detectron2/image/"
     while True:
