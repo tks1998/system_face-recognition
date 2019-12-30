@@ -7,6 +7,9 @@ from . import reset_system
 import os
 import numpy as np
 from django.conf import settings
+from imutils.video import VideoStream
+from imutils.video import FPS
+import time
 from . import config
 from . import process_API
 import shutil
@@ -67,17 +70,26 @@ def upload(request):
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
 def get_frame():
-    camera =cv2.VideoCapture('rtsp://192.168.28.30:80/stream')
-    fourcc = cv2.VideoWriter_fourcc(*'XVID') 
-    url_detec = "http://192.168.20.170:3000/detectron2/image/"
-    while True:
-        _, img = camera.read()
+    # camera =cv2.VideoCapture('rtsp://192.168.28.30:80/stream')
+    # fourcc = cv2.VideoWriter_fourcc(*'XVID') 
+    # while True:
+    #     # _, img = camera.read()
         
-        imgencode=cv2.imencode('.jpg',img)[1]
+    #     imgencode=cv2.imencode('.jpg',img)[1]
+    #     stringData=imgencode.tostring()
+    #     yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
+    # del(camera)
+    vs = VideoStream(src=0).start()
+    time.sleep(2.0)
+    # fps = FPS().start()
+    while True:
+        frame = vs.read()
+        # frame = imutils.resize(frame, width=400)
+        imgencode=cv2.imencode('.jpg',frame)[1]
         stringData=imgencode.tostring()
         yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
-    del(camera)
-    
+    vs.stop()
+    del(vs)
 def indexscreen(request): 
     try:
         template = "pages/screens.html"
