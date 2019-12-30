@@ -77,6 +77,12 @@ def process_img(file_name,option):
                 "name" : t.name,
                 "description" : t.description
             })
+        else:
+            infors.append({
+                "img" : str(y)+".png",
+                "name" : y,
+                "description" : "cannot init name "
+            })
     config.Tree.heap = []
     """ return json include distance and index """
     return {
