@@ -68,11 +68,11 @@ def upload(request):
     return render(request, 'pages/upload.html', result)
 def get_frame():
     camera =cv2.VideoCapture(0)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480)) 
+    fourcc = cv2.VideoWriter_fourcc(*'XVID') 
+    url_detec = "http://192.168.20.170:3000/detectron2/image/"
     while True:
         _, img = camera.read()
-        # out.write(img)
+        
         imgencode=cv2.imencode('.jpg',img)[1]
         stringData=imgencode.tostring()
         yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
@@ -80,7 +80,7 @@ def get_frame():
     
 def indexscreen(request): 
     try:
-        template = "screens.html"
+        template = "pages/screens.html"
         return render(request,template)
     except HttpResponseServerError:
         print("error")
