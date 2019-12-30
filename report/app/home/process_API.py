@@ -9,6 +9,7 @@ import cv2 as cv
 import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
 from PIL import Image
+import shutil
 def get_token():
     """
         Function Get Token. 
@@ -147,7 +148,7 @@ def extract_face(filename, required_size=(160, 160)):
 	face_array = np.asarray(image)
 	return face_array
 
-def facenet(request_name):
+def facenet(request_name,option=1):
     filename, file_extension = os.path.splitext(request_name)
     PATH_IMG = os.path.join(settings.MEDIA_ROOT,request_name)
     
@@ -171,6 +172,23 @@ def facenet(request_name):
     response = requests.post(url_feature, data=data_json, headers=headers)
 
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-    np.save(config.path_new_numpy,response.json()['data'][0]['feature'])
+    a = response.json()['data'][0]['feature']
+    if option==2:
+        return a
+    np.save(config.path_new_numpy,a)
+    
 def resnet():
     pass
+def mix_facenet_vgg16(request_name):
+    VGG16(request_name)
+    name_in_npy = request_name.split(".")[0]+".npy"
+    path_vgg = os.path.join(settings.MEDIA_ROOT_NPY,name_in_npy)
+    a  = np.load(path_vgg)
+  
+    a = a.flatten()
+    b = facenet(request_name,2)
+    feature_mix = np.concatenate((a,b),0)
+    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,name_in_npy)
+
+    np.save(config.path_new_numpy,feature_mix)
+    return 

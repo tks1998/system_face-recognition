@@ -9,8 +9,18 @@ from .documents import Information
 _dict = {    
     "1":config.origin_HOG_npy,
     "2":config.origin_sift_npy,
-    "5":config.origin_facenet_npy
+    "4":config.origin_facenet_npy,
+    "6":config.origin_VGG16_npy,
+    "7":config.origin_mix_vgg_facenet_npy
 }
+_dict_al = {
+    "1":config.Root_running_HOG,
+    "2":config.Root_running_sift,
+    "5":config.Root_running_facenet,
+    "6":config.Root_running_vgg16,
+    "7":config.Root_running_mix_facenet_vgg16
+} 
+
 def process_img(file_name,option):
     """
         get request image 
@@ -24,11 +34,11 @@ def process_img(file_name,option):
    
     
     feature = np.load(os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy"))
-   
-    if config.VP_buid == False:
-        config.VP_buid = True
-        config.Tree = process_Tree.vptree(config.VP_range,_dict[option], config.type_distance)
-        config.Root = config.Tree.build(0,config.VP_range-1)             
+    
+    # if config.VP_buid == False:
+    #     config.VP_buid = True
+    config.Tree = process_Tree.vptree(config.VP_range,_dict[option], config.type_distance)
+    config.Root = config.Tree.build(0,config.VP_range-1)             
         # path_Tree = os.path.join(settings.BASE_DIR, 'home\\model\\Tree_model_HOG_famous_human.pkl')
         # path_root = os.path.join(settings.BASE_DIR, 'home\\model\\root_model_HOG_famous_human.pkl')
         # loadling1 = open(path_Tree, "rb")
