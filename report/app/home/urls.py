@@ -6,7 +6,7 @@ from django.conf import settings
 urlpatterns = [
     path('', views.index),
     path('upload/',views.upload,name ='upload'),
-    url(r'^/(?P<stream_path>(.*?))/$',views.dynamic_stream,name="videostream"),  
+    url(r'^(?P<stream_path>(.*?))$',views.dynamic_stream,name="videostream"),  
     url(r'^stream/$',views.indexscreen),
 ] + static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
 
