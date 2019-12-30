@@ -58,10 +58,10 @@ def upload(request):
 def get_frame():
     camera =cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480)) 
+    # out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480)) 
     while True:
         _, img = camera.read()
-        out.write(img)
+        # out.write(img)
         imgencode=cv2.imencode('.jpg',img)[1]
         stringData=imgencode.tostring()
         yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
