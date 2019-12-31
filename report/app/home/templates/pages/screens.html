@@ -1,22 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Screens</title>
+<meta charset="utf-8">
+<title>Hello OpenCV.js</title>
 </head>
 <body>
-    <table>
-        <tr>
-            
-            <td>
-                    <h1>Video Streaming</h1>
-                    <img src="{% url 'videostream' stream_path='videostream' %}">
+<p id="status">OpenCV.js is loading...</p>
+<div>
+  <div class="inputoutput">
+    <video id="videoInput"></video> <canvas id="canvasOutput"></canvas>
+</div>
+<script type="text/javascript">
 
-            </td>
-        </tr>
-    </table>
-        
+let video = document.getElementById("videoInput"); // video is the id of video tag
+video.width = 640;
+video.height = 480;
+navigator.mediaDevices
+  .getUserMedia({ video: true, audio: false })
+  .then(function(stream) {
+    video.srcObject = stream;
+    video.play();
+
+    let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+    let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
+    let cap = new cv.VideoCapture(video);
+
+    // const FPS = 30;
+    function processVideo() {
+      try {
+        let begin = Date.now();
+        // start processing.
+        cap.read(src);
+        cv.imshow("canvasOutput", src);
+        // schedule the next one.
+        // let delay = 1000 / FPS - (Date.now() - begin);
+        // setTimeout(processVideo, delay);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // schedule the first one.
+    setTimeout(processVideo, 0);
+  })
+
+
+function onOpenCvReady() {
+  // document.getElementById('status').innerHTML = 'Video action';
+}
+</script>
+<script onload="onOpenCvReady();" type="text/javascript"></script>
 </body>
-</html>

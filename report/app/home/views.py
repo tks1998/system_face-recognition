@@ -66,3 +66,7 @@ def upload(request):
             config.type_distance == int(choose_distance)
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
+
+
+def screens(request):
+    return render(request, 'pages/screens.html')
