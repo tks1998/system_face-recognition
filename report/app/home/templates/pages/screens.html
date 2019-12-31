@@ -55,16 +55,18 @@ navigator.mediaDevices
           for(const i of dst.data)
             ar+=i.toString()+',';
           ar = ar.substring(0, ar.length - 1);
-          console.log(ar);
-          $.ajax({
-            "type": "POST",
-            // "dataType": "json",
-            "url": "/indexfr/",
-            "data": ar,
-            "success": function(result) {
-                console.log(result);
-            },
-          });
+        //   console.log(ar);
+        //   $.ajax({
+        //     "type": "POST",
+        //     // "dataType": "json",
+        //     "url": "/indexfr/",
+        //     "data": ar,
+        //     "success": function(result) {
+        //         console.log(result);
+        //     },
+        //   });
+
+
         }
           
       } catch (err) {
@@ -73,6 +75,20 @@ navigator.mediaDevices
     }
     // schedule the first one.
     setTimeout(processVideo, 0);
+
+
+const Http = new XMLHttpRequest();
+const url='/indexfr/';
+Http.open("POST", url);
+Http.send();
+
+Http.onreadystatechange=function(){
+    if(this.readyState==4 && this.status==200){
+        console.log(Http.responseText)
+        }
+}
+
+
   })
 
 </script>
