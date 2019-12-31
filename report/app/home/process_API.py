@@ -215,13 +215,14 @@ def mix_facenet_vgg16(request_name):
 
 
 def insightface(encode_data):
+    encoded_string = encode_data.decode('utf-8')
 
     model_name = 'retinaface_r50_v1'
 
     url_feature = 'http://192.168.20.170:3000/insightface/image/'
     data = {'data': {
         'model': model_name,
-        'image_encoded': encode_data,
+        'image_encoded': encoded_string,
         'parameter': {
             "nms_thresh": 0.7,
             "thresh": 0.7
