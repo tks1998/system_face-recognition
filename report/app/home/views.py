@@ -67,7 +67,7 @@ def upload(request):
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
 def get_frame():
-    camera =cv2.VideoCapture(0)
+    camera =cv2.VideoCapture("http://192.168.28.30/stream")
     fourcc = cv2.VideoWriter_fourcc(*'XVID') 
     while True:
         _, img = camera.read()
