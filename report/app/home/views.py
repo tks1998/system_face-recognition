@@ -70,3 +70,9 @@ def upload(request):
 
 def screens(request):
     return render(request, 'pages/screens.html')
+
+def getframe(strfr):
+    result = {
+        "check" : 2
+    }
+    return render(request, 'pages/screens.html')
