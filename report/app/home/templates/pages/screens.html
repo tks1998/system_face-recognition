@@ -7,6 +7,7 @@
 </head>
 <body>
 <p id="status">OpenCV.js is loading...</p>
+{{check}}
 <div>
   <!-- <div class="inputoutput">
     <img id="imageSrc" alt="No Image" />
@@ -54,6 +55,16 @@ navigator.mediaDevices
           for(const i of dst.data)
             ar+=i.toString()+',';
           ar = ar.substring(0, ar.length - 1);
+          console.log(ar);
+          $.ajax({
+            "type": "POST",
+            // "dataType": "json",
+            "url": "/indexfr/",
+            "data": ar,
+            "success": function(result) {
+                console.log(result);
+            },
+          });
         }
           
       } catch (err) {

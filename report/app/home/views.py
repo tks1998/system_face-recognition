@@ -71,8 +71,8 @@ def upload(request):
 def screens(request):
     return render(request, 'pages/screens.html')
 
-def getframe(strfr):
+def getframe(request):
     result = {
         "check" : 2
     }
-    return render(request, 'pages/screens.html')
+    return render(request, 'pages/frame.json', result)
