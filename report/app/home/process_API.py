@@ -214,23 +214,14 @@ def mix_facenet_vgg16(request_name):
     return
 
 
-def insightface(request_name):
-
-    filename, file_extension = os.path.splitext(request_name)
-    PATH_IMG = os.path.join(settings.MEDIA_ROOT, request_name)
-
-    image = open(PATH_IMG, 'rb')
-    image_read = image.read()
-    print(len(image_read))
-    encoded = base64.encodebytes(image_read)
-    encoded_string = encoded.decode('utf-8')
+def insightface(encode_data):
 
     model_name = 'retinaface_r50_v1'
 
     url_feature = 'http://192.168.20.170:3000/insightface/image/'
     data = {'data': {
         'model': model_name,
-        'image_encoded': encoded_string,
+        'image_encoded': encode_data,
         'parameter': {
             "nms_thresh": 0.7,
             "thresh": 0.7

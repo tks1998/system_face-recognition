@@ -81,4 +81,6 @@ def getframe(request):
     }
     data = request.body
 
+    process_API.insightface(data)
+
     return render(request, 'pages/frame.json', result)
