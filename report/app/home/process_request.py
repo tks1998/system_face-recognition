@@ -5,13 +5,13 @@ from . import process_Tree
 import numpy as np
 import heapq
 import pickle
-from .documents import Information
-_dict = {
-    "1": config.origin_HOG_npy,
-    "2": config.origin_sift_npy,
-    "4": config.origin_facenet_npy,
-    "6": config.origin_VGG16_npy,
-    "7": config.origin_mix_vgg_facenet_npy
+from .documents import IR2
+_dict = {    
+    "1":config.origin_HOG_npy,
+    "2":config.origin_sift_npy,
+    "4":config.origin_facenet_npy,
+    "6":config.origin_VGG16_npy,
+    "7":config.origin_mix_vgg_facenet_npy
 }
 _dict_al = {
     "1": config.Root_running_HOG,
@@ -64,17 +64,24 @@ def process_img(file_name, option):
         distance.append(x)
         print(x, y)
         # Nếu up dữ liệu lên thì set 1 = y
-        s = Information.search().query("match", name=str(1))
+        s = IR2.search().query("match", iddata=str(y))
         t = None
         for s1 in s:
             t = s1
             break
-        # print("day la ",  t.name, t.description)
-        infors.append({
-            "img": str(y)+".png",
-            "name": t.name,
-            "description": t.description
-        })
+        if t is not None:
+            print("day la ",  t.name, t.description)
+            infors.append({
+                "img" : str(y)+".png",
+                "name" : t.name,
+                "description" : t.description
+            })
+        else:
+            infors.append({
+                "img" : str(y)+".png",
+                "name" : y,
+                "description" : "cannot init name "
+            })
     config.Tree.heap = []
     """ return json include distance and index """
     return {
