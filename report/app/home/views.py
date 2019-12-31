@@ -66,28 +66,3 @@ def upload(request):
             config.type_distance == int(choose_distance)
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
-def get_frame():
-    camera =cv2.VideoCapture(0)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480)) 
-    while True:
-        _, img = camera.read()
-        out.write(img)
-        imgencode=cv2.imencode('.jpg',img)[1]
-        stringData=imgencode.tostring()
-        yield (b'--frame\r\n'b'Content-Type: text/plain\r\n\r\n'+stringData+b'\r\n')
-    del(camera)
-    
-def indexscreen(request): 
-    try:
-        template = "screens.html"
-        return render(request,template)
-    except HttpResponseServerError:
-        print("error")
-
-@gzip.gzip_page
-def dynamic_stream(request,stream_path="video"):
-    try :
-        return StreamingHttpResponse(get_frame(),content_type="multipart/x-mixed-replace;boundary=frame")
-    except :
-        return "error"
