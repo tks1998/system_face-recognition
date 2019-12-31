@@ -73,6 +73,7 @@ def screens(request):
 
 def getframe(request):
     result = {
-        "check" : 2
+        "check" : 4
     }
-    return render(request, 'pages/frame.json', result)
+    print(1111111111111)
+    return render(request, 'pages/screens.html', result)

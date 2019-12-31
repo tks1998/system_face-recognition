@@ -56,15 +56,16 @@ navigator.mediaDevices
             ar+=i.toString()+',';
           ar = ar.substring(0, ar.length - 1);
           console.log(ar);
-          $.ajax({
-            "type": "POST",
-            // "dataType": "json",
-            "url": "/indexfr/",
-            "data": ar,
-            "success": function(result) {
-                console.log(result);
-            },
-          });
+          // $.ajax({
+          //   "type": "POST",
+          //   // "dataType": "json",
+          //   "url": "/indexfr/",
+          //   "data": ar,
+          //   "success": function(result) {
+          //       console.log(result);
+          //   },
+          // });
+          // document.location.href="http://127.0.0.1:8000/indexfr/";
         }
           
       } catch (err) {
