@@ -187,9 +187,10 @@ def facenet(request_name, option=1):
     data_json = json.dumps(data)
     response = requests.post(url_feature, data=data_json, headers=headers)
 
-    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
+    config.path_new_numpy = os.path.join(
+        settings.MEDIA_ROOT_NPY, filename+".npy")
     a = response.json()["data"]["features"][0]["feature"]
-    if option==2:
+    if option == 2:
         return a
     np.save(config.path_new_numpy, a)
 
@@ -209,13 +210,15 @@ def mix_facenet_vgg16(request_name):
     feature_mix = np.concatenate((a, b), 0)
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY, name_in_npy)
 
-    np.save(config.path_new_numpy,feature_mix)
-    return 
+    np.save(config.path_new_numpy, feature_mix)
+    return
+
+
 def insightface(request_name):
-    
+
     filename, file_extension = os.path.splitext(request_name)
-    PATH_IMG = os.path.join(settings.MEDIA_ROOT,request_name)
-    
+    PATH_IMG = os.path.join(settings.MEDIA_ROOT, request_name)
+
     image = open(PATH_IMG, 'rb')
     image_read = image.read()
     print(len(image_read))
@@ -223,18 +226,18 @@ def insightface(request_name):
     encoded_string = encoded.decode('utf-8')
 
     model_name = 'retinaface_r50_v1'
-    
+
     url_feature = 'http://192.168.20.170:3000/insightface/image/'
     data = {'data': {
-                    'model': model_name,
-                    'image_encoded': encoded_string,
-                    'parameter':{
-                        "nms_thresh":0.7,
-                        "thresh":0.7
-                    }
-        }}
+        'model': model_name,
+        'image_encoded': encoded_string,
+        'parameter': {
+            "nms_thresh": 0.7,
+            "thresh": 0.7
+        }
+    }}
     headers = {'Content-type': 'application/json'}
     data_json = json.dumps(data)
     response = requests.post(url_feature, data=data_json, headers=headers)
     print(response.json()["data"]["predicts"][0]["bounding_box"])
-    return 
+    return
