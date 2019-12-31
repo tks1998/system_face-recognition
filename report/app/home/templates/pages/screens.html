@@ -47,46 +47,36 @@ navigator.mediaDevices
         cv.imshow("canvasOutput", dst);
         if(i<5)
         {
-          setTimeout(processVideo, 1);
+            setTimeout(processVideo, 1);
         }
         else
         {
-          var ar = "";
-          for(const i of dst.data)
-            ar+=i.toString()+',';
-          ar = ar.substring(0, ar.length - 1);
-        //   console.log(ar);
-        //   $.ajax({
-        //     "type": "POST",
-        //     // "dataType": "json",
-        //     "url": "/indexfr/",
-        //     "data": ar,
-        //     "success": function(result) {
-        //         console.log(result);
-        //     },
-        //   });
-
-
+            var ar = "";
+            for(const i of dst.data)
+                ar+=i.toString()+',';
+            ar = ar.substring(0, ar.length - 1);
+            var encodedString = btoa(ar)
+            
+            const Http = new XMLHttpRequest();
+            const url='/indexfr/';
+            Http.open("POST", url, true);
+            Http.send(encodedString);
+            Http.onreadystatechange=function(){
+            if(this.readyState==4 && this.status==200){
+                console.log(Http.responseText)
+                }
+            }
         }
           
-      } catch (err) {
-        console.error(err);
-      }
+        } catch (err) {
+            console.error(err);
+        }
     }
     // schedule the first one.
     setTimeout(processVideo, 0);
 
 
-const Http = new XMLHttpRequest();
-const url='/indexfr/';
-Http.open("POST", url);
-Http.send();
 
-Http.onreadystatechange=function(){
-    if(this.readyState==4 && this.status==200){
-        console.log(Http.responseText)
-        }
-}
 
 
   })

@@ -133,3 +133,6 @@ IMG_ROOT = os.path.join(BASE_DIR,'home/data/')
 MEDIA_ROOT = os.path.join(BASE_DIR,"home\\upload_img")
 MEDIA_ROOT_NPY = os.path.join(BASE_DIR,"home\\numpy_upload")
 HOG_ = os.path.join(BASE_DIR,'home\\HOG_feature')
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760

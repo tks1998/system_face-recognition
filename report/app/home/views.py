@@ -71,8 +71,15 @@ def upload(request):
 def screens(request):
     return render(request, 'pages/screens.html')
 
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 def getframe(request):
     result = {
         "check" : 2
     }
+    data = request.body
+    data
+
     return render(request, 'pages/frame.json', result)
