@@ -15,7 +15,7 @@ from . import config
 
 def get_token():
     """
-        Function Get Token. 
+        Function Get Token.
         We prepare token for call API MMLAB
     """
     url_token = 'http://service.mmlab.uit.edu.vn/mmlab_api/user_login/post/'
@@ -28,8 +28,8 @@ def get_token():
 
 
 def get_feature(x):
-    """ 
-        In this function, I use API "get feature" support by mmlab UIT. 
+    """
+        In this function, I use API "get feature" support by mmlab UIT.
     """
     if config.new_Token is None:
         get_token()
@@ -215,30 +215,25 @@ def mix_facenet_vgg16(request_name):
     return
 
 
-def insightface(encode_data):
-    # decoded_data = encode_data.decode('utf-8')
-
-    # imgdata = base64.b64decode(str(encode_data))
-    print(type(encode_data))
-    with open(os.path.join(settings.STREAM_ROOT, 'image.jpg'), 'wb') as f:
-        f.write(encode_data)
-
-    image = cv2.imread(os.path.join(settings.STREAM_ROOT, 'image.jpg'))
-    print(image)
+def insightface():
+    image = open(os.path.join(settings.STREAM_ROOT, 'image.jpg'), 'rb')
+    image_read = image.read()
+    encoded = base64.encodebytes(image_read)
+    encoded_string = encoded.decode('utf-8')
 
     model_name = 'retinaface_r50_v1'
 
-    # url_feature = 'http://127.0.0.1:3000/insightface/image/'
-    # data = {'data': {
-    #     'model': model_name,
-    #     'image_encoded': decoded_data,
-    #     'parameter': {
-    #         "nms_thresh": 0.7,
-    #         "thresh": 0.7
-    #     }
-    # }}
-    # headers = {'Content-type': 'application/json'}
-    # data_json = json.dumps(data)
-    # response = requests.post(url_feature, data=data_json, headers=headers)
-    # print(response.json()["data"]["predicts"][0]["bounding_box"])
-    # return
+    url_feature = 'http://192.168.20.170:3000/insightface/image/'
+    data = {'data': {
+        'model': model_name,
+        'image_encoded': encoded_string,
+        'parameter': {
+            "nms_thresh": 0.7,
+            "thresh": 0.7
+        }
+    }}
+    headers = {'Content-type': 'application/json'}
+    data_json = json.dumps(data)
+    response = requests.post(url_feature, data=data_json, headers=headers)
+    print(response.json()["data"])
+    return

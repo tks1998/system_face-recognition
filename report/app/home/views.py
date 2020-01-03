@@ -81,13 +81,10 @@ def getframe(request):
         "check": 2
     }
     data = request.body
-    print(len(data))
     data = np.frombuffer(data, dtype=np.uint8)
-    print(len(data))
-    data = np.reshape(data, (480, 640,3))
-    # print(len(data))
+    data = np.reshape(data, (480, 640, 3))
     cv2.imwrite(os.path.join(settings.STREAM_ROOT, 'image.jpg'), data)
-    # encoded = base64.encodebytes(data)
-    # process_API.insightface(data)
+
+    process_API.insightface()
 
     return render(request, 'pages/frame.json', result)
