@@ -53,13 +53,8 @@
                                 setTimeout(processVideo, 1);
                             } else {
                                 // console.log(dst.data);
-                                var ar = "";
-                                for (const i of dst.data)
-                                    ar += i.toString() + ',';
-                                ar = ar.substring(0, ar.length - 1);
-                                console.log(ar);
 
-                                var encodedString = btoa(ar)
+                                // var encodedString = btoa(ar)
 
                                 const Http = new XMLHttpRequest();
                                 const url = '/indexfr/';
