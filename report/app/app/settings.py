@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'django_elasticsearch_dsl',
+    # 'django_elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [
@@ -130,9 +130,10 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/upload_img/'
 IMG_URL = '/upload/'
 IMG_ROOT = os.path.join(BASE_DIR, 'home/data/')
-MEDIA_ROOT = os.path.join(BASE_DIR, "home\\upload_img")
-MEDIA_ROOT_NPY = os.path.join(BASE_DIR, "home\\numpy_upload")
-HOG_ = os.path.join(BASE_DIR, 'home\\HOG_feature')
-
+MEDIA_ROOT = os.path.join(BASE_DIR, "home/upload_img")
+MEDIA_ROOT_NPY = os.path.join(BASE_DIR, "home/numpy_upload")
+HOG_ = os.path.join(BASE_DIR, 'home/HOG_feature')
+STREAM_URL = '/stream/'
+STREAM_ROOT = os.path.join(BASE_DIR, 'home/stream/')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760

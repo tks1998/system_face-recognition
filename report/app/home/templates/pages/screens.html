@@ -46,44 +46,40 @@
                             i++;
                             // start processing.
                             cap.read(src);
-
                             cv.cvtColor(src, dst, cv.COLOR_RGBA2BGR);
-                            // console.log(i, dst);
                             cv.imshow("canvasOutput", dst);
+
                             if (i < 5) {
                                 setTimeout(processVideo, 1);
                             } else {
+                                // console.log(dst.data);
                                 var ar = "";
                                 for (const i of dst.data)
                                     ar += i.toString() + ',';
                                 ar = ar.substring(0, ar.length - 1);
+                                console.log(ar);
 
-                                
                                 var encodedString = btoa(ar)
 
                                 const Http = new XMLHttpRequest();
                                 const url = '/indexfr/';
                                 Http.open("POST", url, true);
-                                console.log(ar)
-                                Http.send(encodedString);
+                                // Http.send(encodedString);
+                                Http.send(dst.data);
+                                // console.log(dst.data)
+
                                 Http.onreadystatechange = function () {
                                     if (this.readyState == 4 && this.status == 200) {
                                         console.log(Http.responseText)
                                     }
                                 }
                             }
-
                         } catch (err) {
                             console.error(err);
                         }
                     }
                     // schedule the first one.
                     setTimeout(processVideo, 0);
-
-
-
-
-
                 })
         </script>
         {% load static %}

@@ -1,15 +1,16 @@
 import os
-import base64
-import urllib.parse
-import requests
+import cv2
 import json
-from . import config
-from django.conf import settings
-import cv2 as cv
-import numpy as np
-from skimage.feature import hog, blob_doh, peak_local_max
-from PIL import Image
+import base64
 import shutil
+import requests
+import urllib.parse
+import numpy as np
+from PIL import Image
+from django.conf import settings
+# from skimage.feature import hog, blob_doh, peak_local_max
+
+from . import config
 
 
 def get_token():
@@ -87,8 +88,8 @@ def HOG(request_name):
     pix_per_cell = 32
     cell_per_block = 2
     path_img = os.path.join(settings.MEDIA_ROOT, request_name)
-    img = cv.imread(path_img)
-    img = cv.resize(img, (182, 182))
+    img = cv2.imread(path_img)
+    img = cv2.resize(img, (182, 182))
     feature, hog_image = hog(img, orientations=orient,
                              pixels_per_cell=(pix_per_cell, pix_per_cell),
                              cells_per_block=(cell_per_block, cell_per_block),
@@ -112,9 +113,9 @@ def sift_feature(request_name):
     filename, file_extension = os.path.splitext(request_name)
     path_img = os.path.join(settings.MEDIA_ROOT, request_name)
 
-    img = cv.imread(path_img)
-    gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-    sift = cv.xfeatures2d.SIFT_create()
+    img = cv2.imread(path_img)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    sift = cv2.xfeatures2d.SIFT_create()
     key_point, des = sift.detectAndCompute(gray, None)
 
     key_point_np = np.array(key_point)
@@ -160,7 +161,7 @@ def mix_feature_sift_hog(request_name):
 
 
 def extract_face(filename, required_size=(160, 160)):
-    face = cv.imread(filename)
+    face = cv2.imread(filename)
     image = Image.fromarray(face)
     image = image.resize(required_size)
     face_array = np.asarray(image)
@@ -215,21 +216,29 @@ def mix_facenet_vgg16(request_name):
 
 
 def insightface(encode_data):
-    # encoded_string = encode_data.decode('utf-8')
+    # decoded_data = encode_data.decode('utf-8')
+
+    # imgdata = base64.b64decode(str(encode_data))
+    print(type(encode_data))
+    with open(os.path.join(settings.STREAM_ROOT, 'image.jpg'), 'wb') as f:
+        f.write(encode_data)
+
+    image = cv2.imread(os.path.join(settings.STREAM_ROOT, 'image.jpg'))
+    print(image)
 
     model_name = 'retinaface_r50_v1'
 
-    url_feature = 'http://192.168.20.170:3000/insightface/image/'
-    data = {'data': {
-        'model': model_name,
-        'image_encoded': encode_data,
-        'parameter': {
-            "nms_thresh": 0.7,
-            "thresh": 0.7
-        }
-    }}
-    headers = {'Content-type': 'application/json'}
-    data_json = json.dumps(data)
-    response = requests.post(url_feature, data=data_json, headers=headers)
-    print(response.json()["data"]["predicts"][0]["bounding_box"])
-    return
+    # url_feature = 'http://127.0.0.1:3000/insightface/image/'
+    # data = {'data': {
+    #     'model': model_name,
+    #     'image_encoded': decoded_data,
+    #     'parameter': {
+    #         "nms_thresh": 0.7,
+    #         "thresh": 0.7
+    #     }
+    # }}
+    # headers = {'Content-type': 'application/json'}
+    # data_json = json.dumps(data)
+    # response = requests.post(url_feature, data=data_json, headers=headers)
+    # print(response.json()["data"]["predicts"][0]["bounding_box"])
+    # return

@@ -1,20 +1,21 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.core.files.storage import FileSystemStorage
-from . import process_Tree
-from . import process_request
-from . import reset_system
+import base64
 import os
+import cv2
+import shutil
 import numpy as np
 from django.conf import settings
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators import gzip
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse, StreamingHttpResponse, HttpResponseServerError
+
 from . import config
 from . import process_API
-import shutil
-import cv2
-# Create your views here.
-from django.http import HttpResponse, StreamingHttpResponse, HttpResponseServerError
-from django.views.decorators import gzip
+from . import reset_system
+from . import process_Tree
+from . import process_request
 
 
 def index(request):
@@ -80,8 +81,15 @@ def getframe(request):
         "check": 2
     }
     data = request.body
-    data = data.decode('utf-8')
-    # print("1111111111111",type(data))
-    process_API.insightface(data)
+    print(type(data))
+
+    encoded = base64.encodebytes(data)
+
+    with open(os.path.join(settings.STREAM_ROOT, 'image.png'), 'wb') as f:
+        f.write(data)
+
+    image = cv2.imread(os.path.join(settings.STREAM_ROOT, 'image.jpg'))
+    print(image)
+    # process_API.insightface(data)
 
     return render(request, 'pages/frame.json', result)
