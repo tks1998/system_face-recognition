@@ -88,14 +88,16 @@
                                 console.log(x);
                                 const div = document.createElement('div');
                                 div.innerHTML = `
+                                    <img id="img`+i+`" height="100" width="80">
                                     <h1 id="name`+i+`">Name: </h1>
                                     <h1 id="description`+i+`">Description: </h1>
                                     <br>
                                 `;
                                 document.getElementById('abc').appendChild(div);
-
+                                
                                 document.getElementById('name'+i.toString()).append(x['name']);
                                 document.getElementById('description'+i.toString()).append(x['description']);
+                                document.getElementById("img"+i.toString()).src="../../stream/image"+ i.toString() +".jpg";
                                 i++;
                             }
                         }
