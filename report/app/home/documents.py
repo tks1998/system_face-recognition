@@ -11,6 +11,7 @@ connections.configure(
     }
 )
 
+
 @registry.register_document
 class IR2(Document):
     class Index:
@@ -27,18 +28,20 @@ class IR2(Document):
             'description',
             'university',
         ]
-for x in range(0,100):
+
+
+for x in range(0, 100):
     name1 = IR2(
         iddata=x,
         name=x,
         description="famous human",
-        university = "UIT"
+        university="UIT"
     )
     name1.save()
 name1 = IR2(
-    iddata = 101,
-    name = "Dang Xuan Truong",
+    iddata=101,
+    name="Dang Xuan Truong",
     description="UITer K12",
-    university = "UIT"
+    university="UIT"
 )
 name1.save()

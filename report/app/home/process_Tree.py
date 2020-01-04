@@ -6,6 +6,7 @@ import random
 import pickle
 from scipy.spatial.distance import cosine
 
+
 class Node:
     """ Node in vp-tree """
 
@@ -25,7 +26,7 @@ class vptree:
             Search: O(long(n)*time read file hard disk)
     """
 
-    def __init__(self, maximum,path, type_distance = 1):
+    def __init__(self, maximum, path, type_distance=1):
         self.items = np.arange(0, maximum)
         self.current_Ranking = config.Range_find
         self.heap = []
@@ -79,7 +80,7 @@ class vptree:
             return None
         node = Node()
         node.index = lower
-        
+
         if upper-lower > 0:
             middle = random.randint(lower+1, upper)
             sp = self._partition(lower+1, middle, upper, self.items[lower])
