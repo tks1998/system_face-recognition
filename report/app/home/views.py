@@ -78,6 +78,14 @@ def screens(request):
     return render(request, 'pages/screens.html')
 
 
+def func(x, y):
+    if (x<0):
+        return 0
+    if (x>y):
+        return int(y)
+    return int(x)
+
+
 @csrf_exempt
 def getframe(request):
 
@@ -87,13 +95,18 @@ def getframe(request):
     cv2.imwrite(os.path.join(settings.STREAM_ROOT, 'image.jpg'), data)
 
     result = process_API.insightface()
-
+    all_data = []
     for i in range(0, len(result['predicts'])):
         td = result['predicts'][i]['bounding_box']
-        img = data[int(td[1]):int(td[3]), int(td[0]):int(td[2]), :]
+        td[0] = func(td[0], 640)
+        td[1] = func(td[1], 480)
+        td[2] = func(td[2], 640)
+        td[3] = func(td[3], 480)
+        img = data[td[1]:td[3], td[0]:td[2], :]
         path_img = os.path.join(settings.STREAM_ROOT,
                                 'image' + str(i) + '.jpg')
         cv2.imwrite(path_img, img)
-        # process_request.process_request_from_camera(path_img)
-
+        all_data.append(process_request.process_request_from_camera(path_img))
+    
+    result['data']=all_data
     return JsonResponse(result)

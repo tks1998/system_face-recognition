@@ -271,7 +271,6 @@ def voting_classifer(request_name):
         config.voting_model_loaded = pickle.load(
             open(config.voting_model, 'rb'))
     feature = facenet(request_name, 2)
-    print("label ", feature)
     label = config.voting_model_loaded.predict([feature])
 
     return label
