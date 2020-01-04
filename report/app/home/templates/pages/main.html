@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title> Đánh giá mô hình </title>
+    <title> He Thong Nhan Dien Khuon Mat - CS338.K11 </title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=vietnamese"
@@ -31,7 +31,6 @@
     <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
 
     {% load static %}
-    <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
     <!-- Bootstrap CSS File -->
     <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -60,10 +59,8 @@
 
 <body>
     {% include "navbar.html" %}
-    <div class="row">
-        {% block content %}
-        {% endblock %}
-    </div>
+    {% block content %}
+    {% endblock %}
 
 
     <div id="copyrights">

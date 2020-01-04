@@ -1,16 +1,14 @@
 {% extends "pages/main.html" %}
 
-{% block title %}Upload & Search{% endblock %}
-
 {% load static %}
 <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 
 {% block style %}
 <style>
-   .output_img {
-      margin: 10px 10px 10px 10px;
-      padding-top: 100px;
-   }
+    .output_img {
+        margin: 10px 10px 10px 10px;
+        padding-top: 100px;
+    }
 </style>
 
 {% endblock %}
@@ -21,103 +19,104 @@
 
 {% block content %}
 
-   <div class="banner">
-      <div class="container">
-         <div class="row">
+<div class="banner">
+    <div class="container">
+        <div class="row">
             <div class="col-md-6 offset-md-3 ">
-               <div class="header-text caption">
-                  <h2>Search your face</h2>
-                  <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
-               </div>
-               <div id="search-section">
+                <div class="header-text caption">
+                    <h2>Search your face</h2>
+                    <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
+                </div>
+                <div id="search-section">
 
-                  <form method="post" enctype="multipart/form-data">
-                     {% csrf_token %}
-                     <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
-                     <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
-                           aria-hidden="true"></i></label>
-                     <select class="featureselect btn btn-outline-light" name="choose_method">
-                        <option value="1">HOG</option>
-                        <option value="2">Sift Feature</option>
-                        <option value="3">Mix Sift_n_Hog</option>
-                        <option value="4">facenet</option>
-                        <option value="5">VGGFace Resnet50</option>
-                        <option value="6" selected>VGG16</option>
-                        <option value="7" selected>VGG16+facenet</option>
-                        <option value="8" selected>SVM+facenet</option>
-                        <option value="9" selected>Naive Bayes+facenet</option>
-                        <option value="10" selected>MLP+facenet</option>
-                        <option value="11" selected>VotingClassify+facenet</option>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
+                        <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
+                                aria-hidden="true"></i></label>
+                        <select class="featureselect btn btn-outline-light" name="choose_method">
+                            <option value="1">HOG</option>
+                            <option value="2">Sift Feature</option>
+                            <option value="3">Mix Sift_n_Hog</option>
+                            <option value="4">facenet</option>
+                            <option value="5">VGGFace Resnet50</option>
+                            <option value="6" selected>VGG16</option>
+                            <option value="7" selected>VGG16+facenet</option>
+                            <option value="8" selected>SVM+facenet</option>
+                            <option value="9" selected>Naive Bayes+facenet</option>
+                            <option value="10" selected>MLP+facenet</option>
+                            <option value="11" selected>VotingClassify+facenet</option>
 
-                     </select>
-                     <select class="featureselect btn btn-outline-light" name="choose_distance">
-                        <option value="1">Euclid</option>
-                        <option value="2">Cosine</option>
-                     </select>
-                     <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
-                     <button class="btn btn-outline-light" type="submit"> Search</button>
-                  </form>
+                        </select>
+                        <select class="featureselect btn btn-outline-light" name="choose_distance">
+                            <option value="1">Euclid</option>
+                            <option value="2">Cosine</option>
+                        </select>
+                        <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light"
+                            name="knumber" />
+                        <button class="btn btn-outline-light" type="submit"> Search</button>
+                    </form>
 
-               </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-   
+        </div>
+    </div>
+</div>
+
 <div class="output_img">
-   <div class="row">
-      <div class="col-sm-3">
-         <center>
-            <h3>Request - Image</h3>
-         </center>
+    <div class="row">
+        <div class="col-sm-3">
+            <center>
+                <h3>Request - Image</h3>
+            </center>
 
-         <img class="uploadimg" width=100% src="../upload_img/{{origin}}" id="preview" class="img-thumbnail">
-      </div>
-      <div class="col-sm-9">
-         <div class="center">
-            <div class="row">
-               {% for infor in information %}
-               <div class="col-3 mb-4">
-                  <img style="display:block;" width="100%" src="{{infor.img}}">
-                  <div class="down-content">
-                     <center>
-                        {{infor.name}} : {{infor.description}}
-                        {% comment %} this is img's name {% endcomment %}
-                     </center>
-                  </div>
+            <img class="uploadimg" width=100% src="../upload_img/{{origin}}" id="preview" class="img-thumbnail">
+        </div>
+        <div class="col-sm-9">
+            <div class="center">
+                <div class="row">
+                    {% for infor in information %}
+                    <div class="col-3 mb-4">
+                        <img style="display:block;" width="100%" src="{{infor.img}}">
+                        <div class="down-content">
+                            <center>
+                                {{infor.name}} : {{infor.description}}
+                                {% comment %} this is img's name {% endcomment %}
+                            </center>
+                        </div>
 
-               </div>
-               {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>
 
 <script>
-   var inputs = document.querySelectorAll('.inputfile');
-   Array.prototype.forEach.call(inputs, function (input) {
-      var label = input.nextElementSibling;
-      input.addEventListener('change', function (e) {
-         var fileName = e.target.value.split('\\').pop();
-         label.innerHTML = fileName;
-         var reader = new FileReader();
-         reader.onload = function (e) {
-            // get loaded data and render thumbnail.
-            document.getElementById("preview").src = e.target.result;
-         };
-         // read the image file as a data URL.
-         reader.readAsDataURL(this.files[0]);
-      });
-   });
+    var inputs = document.querySelectorAll('.inputfile');
+    Array.prototype.forEach.call(inputs, function (input) {
+        var label = input.nextElementSibling;
+        input.addEventListener('change', function (e) {
+            var fileName = e.target.value.split('\\').pop();
+            label.innerHTML = fileName;
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("preview").src = e.target.result;
+            };
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        });
+    });
 </script>
 
 {% if origin is not None %}
 <script type="text/javascript">
-   $('.output_img')[0].scrollIntoView({
-      behavior: "smooth", // or "auto" or "instant"
-      block: "start" // or "end"
-   });
+    $('.output_img')[0].scrollIntoView({
+        behavior: "smooth", // or "auto" or "instant"
+        block: "start" // or "end"
+    });
 </script>
 
 {% endif %}
