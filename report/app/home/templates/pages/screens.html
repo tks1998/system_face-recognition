@@ -21,9 +21,8 @@
     <video class="responsive-item render" id="videoInput"></video>
     <canvas class="render" id="canvasOutput"></canvas>
 </div>
-<div>
-    <h1 id="name">Name: </h1>
-    <h1 id="description">Description: </h1>
+<div id="abc">
+    
 </div>
 {% load static %}
 <script src="{% static 'js/opencv.js' %}" type="text/javascript"></script>
@@ -87,8 +86,16 @@
                                 console.log(serverResponse.data[i]);
                                 var x = serverResponse.data[i];
                                 console.log(x);
-                                document.getElementById('name').append(x['name']);
-                                document.getElementById('description').append(x['description']);
+                                const div = document.createElement('div');
+                                div.innerHTML = `
+                                    <h1 id="name`+i+`">Name: </h1>
+                                    <h1 id="description`+i+`">Description: </h1>
+                                    <br>
+                                `;
+                                document.getElementById('abc').appendChild(div);
+
+                                document.getElementById('name'+i.toString()).append(x['name']);
+                                document.getElementById('description'+i.toString()).append(x['description']);
                                 i++;
                             }
                         }
