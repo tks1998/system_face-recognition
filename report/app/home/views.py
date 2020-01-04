@@ -91,7 +91,7 @@ def getframe(request):
         print(i)
         td = result['predicts'][i]['bounding_box']
         img = data[int(td[1]):int(td[3]), int(td[0]):int(td[2]), :]
-        cv2.imwrite(os.path.join(settings.STREAM_ROOT,
-                                 'image' + str(i) + '.jpg'), img)
-        # process_API.find_img(i)
+        path_img = os.path.join(settings.STREAM_ROOT,'image' + str(i) + '.jpg')
+        cv2.imwrite(path_img, img)
+        process_request.process_request_from_camera(path_img)
     return JsonResponse(result)
