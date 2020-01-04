@@ -19,7 +19,6 @@ from . import reset_system
 from . import process_Tree
 from . import process_request
 
-
 def index(request):
 
     return render(request, 'pages/home.html')
@@ -85,9 +84,9 @@ def getframe(request):
     data = np.frombuffer(data, dtype=np.uint8)
     data = np.reshape(data, (480, 640, 3))
     cv2.imwrite(os.path.join(settings.STREAM_ROOT, 'image.jpg'), data)
-    print(type(data))
+    # print(type(data))
     result = process_API.insightface()
-    print(result['predicts'][0]['bounding_box'])
+    # print(result['predicts'][0]['bounding_box'])
     for i in range(0, len(result['predicts'])):
         print(i)
         td = result['predicts'][i]['bounding_box']

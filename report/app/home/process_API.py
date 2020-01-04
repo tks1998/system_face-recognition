@@ -239,8 +239,7 @@ def insightface():
     headers = {'Content-type': 'application/json'}
     data_json = json.dumps(data)
     response = requests.post(url_feature, data=data_json, headers=headers)
-    print(response.json()["data"]["predicts"][0]["bounding_box"])
-    return 
+    return response.json()["data"]
 
 def svm_classifer(request_name):
     if config.svm_model_loaded is None:
@@ -267,6 +266,7 @@ def voting_classifer(request_name):
     if config.voting_model_loaded is None:
         config.voting_model_loaded = pickle.load(open(config.voting_model, 'rb'))
     feature = facenet(request_name, 2)
+    print("label ", feature)
     label = config.voting_model_loaded.predict([feature])
+    
     return label
-    return response.json()["data"]
