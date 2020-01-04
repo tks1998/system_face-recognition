@@ -63,6 +63,7 @@ def upload(request):
                 process_API.VGG16(new_name)
             if choose_method=="7":
                 process_API.mix_facenet_vgg16(new_name)
+            process_API.voting_classifer()
             config.type_distance == int(choose_distance)
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)

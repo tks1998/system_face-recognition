@@ -10,6 +10,10 @@ import numpy as np
 from skimage.feature import hog, blob_doh, peak_local_max
 from PIL import Image
 import shutil
+import pickle
+from mlxtend.classifier import EnsembleVoteClassifier
+import copy
+
 def get_token():
     """
         Function Get Token. 
@@ -219,3 +223,31 @@ def insightface(request_name):
     response = requests.post(url_feature, data=data_json, headers=headers)
     print(response.json()["data"]["predicts"][0]["bounding_box"])
     return 
+
+def svm_classifer(request_name):
+    if config.svm_model_loaded is None:
+        config.svm_model_loaded = pickle.load(open(config.svm_model, 'rb'))
+    feature = facenet(request_name, 2)
+    label = config.svm_model_loaded.predict(feature)
+    return label
+
+def NB_classifer(request_name):
+    if config.NB_model_loaded is None:
+        config.NB_model_loaded = pickle.load(open(config.NB_model, 'rb'))
+    feature = facenet(request_name, 2)
+    label = config.NB_model_loaded.predict(feature)
+    return label
+        
+def mlp_classifer(request_name):
+    if config.mlp_model_loaded is None:
+        config.mlp_model_loaded = pickle.load(open(config.mlp_model, 'rb'))
+    feature = facenet(request_name, 2)
+    label = config.mlp_model_loaded.predict(feature)
+    return label
+
+def voting_classifer(request_name):
+    if config.voting_model_loaded is None:
+        config.voting_model_loaded = pickle.load(open(config.voting_model, 'rb'))
+    feature = facenet(request_name, 2)
+    label = config.voting_model_loaded.predict(feature)
+    return label
