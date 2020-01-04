@@ -9,74 +9,82 @@
 
 <body>
     <p id="status">OpenCV.js is loading...</p>
-    {{check}}
-    <div>
-        <!-- <div class="inputoutput">
-    <img id="imageSrc" alt="No Image" />
-    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
-  </div> -->
-        <div class="inputoutput">
-            <video id="videoInput"></video>
-            <canvas id="canvasOutput">
+    <div class="inputoutput">
+        <video id="videoInput"></video>
+        <canvas id="canvasOutput" hidden>
 
-            </canvas>
-        </div>
+        </canvas>
+    </div>
 
-        <script type="text/javascript">
-            let video = document.getElementById("videoInput"); // video is the id of video tag
-            video.width = 640;
-            video.height = 480;
-            navigator.mediaDevices
-                .getUserMedia({
-                    video: true,
-                    audio: false
-                })
-                .then(function (stream) {
-                    video.srcObject = stream;
-                    video.play();
+    <script type="text/javascript">
+        let video = document.getElementById("videoInput"); // video is the id of video tag
+        video.width = 640;
+        video.height = 480;
+        navigator.mediaDevices
+            .getUserMedia({
+                video: true,
+                audio: false
+            })
+            .then(function (stream) {
+                video.srcObject = stream;
+                video.play();
 
-                    let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
-                    let dst = new cv.Mat(video.height, video.width, cv.CV_8UC3);
-                    let cap = new cv.VideoCapture(video);
+                let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+                let dst = new cv.Mat(video.height, video.width, cv.CV_8UC3);
+                let cap = new cv.VideoCapture(video);
+                var stop = 0;
+                var i = 1;
 
-                    var i = 1;
+                function processVideo() {
+                    try {
+                        i++;
+                        // start processing.
+                        cap.read(src);
+                        cv.cvtColor(src, dst, cv.COLOR_RGBA2BGR);
+                        // console.log(dst.data);
 
-                    function processVideo() {
-                        try {
-                            i++;
-                            // start processing.
-                            cap.read(src);
-                            cv.cvtColor(src, dst, cv.COLOR_RGBA2BGR);
-                            cv.imshow("canvasOutput", dst);
+                        // var encodedString = btoa(ar)
 
-                            if (i < 5) {
-                                setTimeout(processVideo, 1);
-                            } else {
-                                // console.log(dst.data);
+                        const Http = new XMLHttpRequest();
+                        const url = '/indexfr/';
+                        Http.open("POST", url, true);
+                        // Http.send(encodedString);
+                        Http.send(dst.data);
+                        // console.log(dst.data)
+                        cv.imshow("canvasOutput", src);
+                        Http.onreadystatechange = function () {
 
-                                // var encodedString = btoa(ar)
-
-                                const Http = new XMLHttpRequest();
-                                const url = '/indexfr/';
-                                Http.open("POST", url, true);
-                                // Http.send(encodedString);
-                                Http.send(dst.data);
-                                // console.log(dst.data)
-
-                                Http.onreadystatechange = function () {
-                                    if (this.readyState == 4 && this.status == 200) {
-                                        console.log(Http.responseText)
-                                    }
+                            if (this.readyState == 4 && this.status == 200) {
+                                // Http.responseType = "json";
+                                var serverResponse = JSON.parse(Http.responseText);
+                                for (predict of serverResponse.predicts) {
+                                    var td = predict.bounding_box;
+                                    var x = td[0];
+                                    var y = td[1];
+                                    var w = td[2] - td[0];
+                                    var h = td[3] - td[1];
+                                    var c = document.getElementById("canvasOutput");
+                                    var ctx = c.getContext("2d");
+                                    ctx.beginPath();
+                                    ctx.lineWidth = "3";
+                                    ctx.strokeStyle = "red";
+                                    ctx.rect(x, y, w, h);
+                                    ctx.stroke();
                                 }
                             }
-                        } catch (err) {
-                            console.error(err);
                         }
+                    } catch (err) {
+                        console.error(err);
                     }
-                    // schedule the first one.
-                    setTimeout(processVideo, 0);
-                })
-        </script>
-        {% load static %}
-        <script src="{% static 'js/opencv.js' %}" type="text/javascript"></script>
+                    document.getElementById("videoInput").setAttribute("hidden", "");
+                    document.getElementById("canvasOutput").removeAttribute("hidden");
+                }
+                // schedule the first one.
+                setTimeout(processVideo, 4000);
+
+
+            })
+    </script>
+    {% load static %}
+    <script src="{% static 'js/opencv.js' %}" type="text/javascript"></script>
 </body>

@@ -235,5 +235,9 @@ def insightface():
     headers = {'Content-type': 'application/json'}
     data_json = json.dumps(data)
     response = requests.post(url_feature, data=data_json, headers=headers)
-    print(response.json()["data"])
-    return
+    return response.json()["data"]
+
+
+def find_img(request_name):
+    path_img = os.path.join(settings.STREAM_ROOT,
+                            'image' + request_name + '.jpg')

@@ -1,8 +1,10 @@
+from django.http import JsonResponse
 import base64
 import os
 import cv2
 import shutil
 import numpy as np
+import json
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -77,14 +79,19 @@ def screens(request):
 
 @csrf_exempt
 def getframe(request):
-    result = {
-        "check": 2
-    }
+
     data = request.body
     data = np.frombuffer(data, dtype=np.uint8)
     data = np.reshape(data, (480, 640, 3))
     cv2.imwrite(os.path.join(settings.STREAM_ROOT, 'image.jpg'), data)
-
-    process_API.insightface()
-
-    return render(request, 'pages/frame.json', result)
+    print(type(data))
+    result = process_API.insightface()
+    print(result['predicts'][0]['bounding_box'])
+    for i in range(0, len(result['predicts'])):
+        print(i)
+        td = result['predicts'][i]['bounding_box']
+        img = data[int(td[1]):int(td[3]), int(td[0]):int(td[2]), :]
+        cv2.imwrite(os.path.join(settings.STREAM_ROOT,
+                                 'image' + str(i) + '.jpg'), img)
+        # process_API.find_img(i)
+    return JsonResponse(result)
