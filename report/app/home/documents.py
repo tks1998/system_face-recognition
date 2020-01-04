@@ -30,7 +30,7 @@ class IR2(Document):
         ]
 
 
-for x in range(0, 100):
+for x in range(0, 18089):
     name1 = IR2(
         iddata=x,
         name=x,
@@ -38,10 +38,10 @@ for x in range(0, 100):
         university="UIT"
     )
     name1.save()
-name1 = IR2(
-    iddata=101,
-    name="Dang Xuan Truong",
-    description="UITer K12",
-    university="UIT"
-)
-name1.save()
+# name1 = IR2(
+#     iddata=101,
+#     name="Dang Xuan Truong",
+#     description="UITer K12",
+#     university="UIT"
+# )
+# name1.save()

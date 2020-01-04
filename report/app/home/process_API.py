@@ -239,8 +239,7 @@ def insightface():
     headers = {'Content-type': 'application/json'}
     data_json = json.dumps(data)
     response = requests.post(url_feature, data=data_json, headers=headers)
-    print(response.json()["data"]["predicts"][0]["bounding_box"])
-    return 
+    return response.json()["data"]
 
 def svm_classifer(request_name):
     if config.svm_model_loaded is None:
@@ -270,8 +269,3 @@ def voting_classifer(request_name):
     label = config.voting_model_loaded.predict([feature])
     return label
     return response.json()["data"]
-
-
-def find_img(request_name):
-    path_img = os.path.join(settings.STREAM_ROOT,
-                            'image' + request_name + '.jpg')

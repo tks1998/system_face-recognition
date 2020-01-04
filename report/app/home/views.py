@@ -12,6 +12,7 @@ from django.views.decorators import gzip
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, StreamingHttpResponse, HttpResponseServerError
+from . import process_request
 
 from . import config
 from . import process_API
@@ -87,12 +88,16 @@ def getframe(request):
     cv2.imwrite(os.path.join(settings.STREAM_ROOT, 'image.jpg'), data)
     print(type(data))
     result = process_API.insightface()
-    print(result['predicts'][0]['bounding_box'])
-    for i in range(0, len(result['predicts'])):
-        print(i)
-        td = result['predicts'][i]['bounding_box']
-        img = data[int(td[1]):int(td[3]), int(td[0]):int(td[2]), :]
-        cv2.imwrite(os.path.join(settings.STREAM_ROOT,
-                                 'image' + str(i) + '.jpg'), img)
-        # process_API.find_img(i)
+    if result is not None:
+    
+        for i in range(0, len(result['predicts'])):
+            print(i)
+            td = result['predicts'][i]['bounding_box']
+            img = data[int(td[1]):int(td[3]), int(td[0]):int(td[2]), :]
+            path_img = os.path.join(settings.STREAM_ROOT,
+                                    'image' + str(i) + '.jpg')
+            cv2.imwrite(path_img, img)
+            print("finsh predict ")
+            # print(process_request.process_request_from_camera(path_img))
+            
     return JsonResponse(result)
