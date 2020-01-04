@@ -1,31 +1,20 @@
-{% block style %}
-{% load static %}
-<link href="{% static 'css/navbar.css' %}" rel="stylesheet" type="text/css" />
-{% endblock %}
-
 {% block content %}
-<header class="">
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="../">
-                <h2>Searchyourface</h2>
-            </a>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../upload">Search
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../evaluation/">Model evaluation</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../screens/">Camera</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+<!-- Menu -->
+<nav class="menu" id="theMenu">
+    <div class="menu-wrap">
+        <h1 class="logo"><a href="#home" class="smoothscroll">A++</a></h1>
+        <i class="fa fa-times menu-close"></i>
+        <a href="#home" class="smoothscroll">Home</a>
+        <a href="#about" class="smoothscroll">About</a>
+        <a href="../upload" target="_blank">Search your face</a>
+        <a href="../screens" target="_blank">Live Camera</a>
+        <a href="#contact" class="smoothscroll">Contact</a>
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-envelope"></i></a>
+    </div>
+
+    <!-- Menu button -->
+    <div id="menuToggle"><i class="fa fa-bars"></i></div>
+</nav>
 {% endblock %}

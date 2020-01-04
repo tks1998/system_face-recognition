@@ -92,23 +92,24 @@ def process_img(file_name, option):
         "origin": file_name
     }
 
+
 def process_request_from_camera(filename):
     id_img = process_API.voting_classifer(filename)
-    
+
     indexing = IR2.search().query("match", iddata=str(id_img[0]))
-    print("indexing",indexing)
+    print("indexing", indexing)
     infors = []
     print(id_img[0])
     for data in indexing:
-        infors.append({ 
+        infors.append({
             "img": str(id_img[0])+".png",
             "name": data.name,
             "description": data.description
         })
-    infors.append({ 
-            "img": str(1)+".png",
-            "name": 1,
-            "description": "error"
-        })    
-    print("infors",infors)
+    infors.append({
+        "img": str(1)+".png",
+        "name": 1,
+        "description": "error"
+    })
+    print("infors", infors)
     return infors
