@@ -2,70 +2,87 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <title> Đánh giá mô hình </title>
 
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa:500&display=swap&subset=vietnamese" rel="stylesheet">
-    <script type="text/JavaScript"
-        src="https://raw.githubusercontent.com/javve/list.js/v1.5.0/dist/list.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap&subset=vietnamese"
+        rel="stylesheet">
+
+
+    <!-- =======================================================
+            Template Name: Studio
+            Template URL: https://templatemag.com/studio-bootstrap-agency-template/
+        Author: TemplateMag.com
+        License: https://templatemag.com/license/
+        ======================================================= -->
+
+    <script type="text/JavaScript" src="https://raw.githubusercontent.com/javve/list.js/v1.5.0/dist/list.min.js">
+    </script>
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
 
+    {% load static %}
+    <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/fancybox/fancybox.css' %}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- JavaScript Libraries -->
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/php-mail-form/validate.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/stellar/stellar.min.js' %}"></script>
+    <script src="{% static 'lib/fancybox/fancybox.js' %}"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="{% static 'js/main.js' %}"></script>
     {% block style %}
     {% endblock %}
     {% load static %}
-    <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
 </head>
+
 
 <body>
     {% include "navbar.html" %}
-    
-    <div class="banner">
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <div id="copyrights">
         <div class="container">
-           <div class="row">
-              <div class="col-md-6 offset-md-3 ">
-                 <div class="header-text caption">
-                    <h2>Search your face</h2>
-                    <span class="mb-5" style="color: white;">Choose the image and wait for the magic :v</span>
-                 </div>
-                 <div id="search-section">
-     
-                    <form method="post" enctype="multipart/form-data">
-                       {% csrf_token %}
-                       <input id="file" class="inputfile" type="file" name="document" accept="image/png, image/jpeg" />
-                       <label for="file">Choose a file...<i class="fas fa-cloud-upload-alt ml-3"
-                             aria-hidden="true"></i></label>
-                       <select class="featureselect btn btn-outline-light" name="choose_method">
-                          <option value="1" >HOG</option>
-                          <option value="2">Sift Feature</option>
-                          <option value="3">Mix Sift_n_Hog</option>
-                          <option value="4">facenet</option>
-                          <option value="5" >VGGFace Resnet50</option>
-                          <option value="6" selected>VGG16</option>
-                          <option value="7" selected>VGG16+facenet</option>
-                          
-                       </select>
-                       <select class="featureselect btn btn-outline-light" name="choose_distance">
-                        <option value="1" >Euclid</option>
-                        <option value="2">Cosine</option>
-                     </select>
-                       <input placeholder="Enter k..." type="text" class="knumber btn btn-outline-light" name="knumber" />
-                       <button class="btn btn-outline-light" type="submit"> Search</button>
-                    </form>
-     
-                 </div>
-              </div>
-           </div>
+            <p>
+                &copy; Copyrights <strong>Studio</strong>. All Rights Reserved
+            </p>
+            <div class="credits">
+                <!-- You are NOT allowed to delete the credit link to TemplateMag with free version.
+                You can delete the credit link only if you bought the pro version.
+                Buy the pro version with working PHP/AJAX contact form:
+                https://templatemag.com/studio-bootstrap-agency-template/
+                Licensing information: https://templatemag.com/license/ -->
+
+                Created with Studio template by <a href="https://templatemag.com/">TemplateMag</a>
+            </div>
         </div>
-     </div>
-    {% block content %}
-    {% endblock %}
-    
+    </div>
+    <!-- / copyrights -->
 </body>
 
 </html>

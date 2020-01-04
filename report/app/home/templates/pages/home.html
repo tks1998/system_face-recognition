@@ -1,32 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "pages/main.html" %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Đánh giá mô hình </title>
-
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa:500&display=swap&subset=vietnamese" rel="stylesheet">
-    <script type="text/JavaScript"
-        src="https://raw.githubusercontent.com/javve/list.js/v1.5.0/dist/list.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    {% load static %}
-    <link href="{% static 'css/upload-image.css' %}" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-    {% include "navbar.html" %}
-    <div style="padding-top: 80px;">
-        <div class="banner">
+{% block content %}
+<section id="home" name="home"></section>
+<div id="headerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>HE THONG NHAN DIEN KHUON MAT</h1>
+            </div>
         </div>
     </div>
-    
-    
-</body>
+</div>
 
-</html>
+<section id="about" name="about"></section>
+
+<div id="aboutwrap"></div>
+
+<div class="sep about" data-stellar-background-ratio="0.5"></div>
+
+<section id="contact" name="contact"></section>
+
+<div class="sep contact" data-stellar-background-ratio="0.5"></div>
+
+<div id="aboutwrap"></div>
+
+<div id="contactwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <p>CONTACT ME RIGHT NOW!</p>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s.</p>
+                <p>
+                    <small>5th Avenue, 987<br />
+                        38399, New York,<br />
+                        USA.</small>
+                </p>
+                <p>
+                    <small>Tel. 9888-4394<br />
+                        Mail. hello@example.com<br />
+                        Skype. ExampleSkype
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- /container -->
+</div>
+
+{% endblock %}

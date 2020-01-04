@@ -13,7 +13,7 @@ def remove_file():
 
     if os.path.exists(up_npy) == True:
         shutil.rmtree(up_npy)
-  
+
     if os.path.exists(up_img) == False:
         os.mkdir(up_img)
     if os.path.exists(up_npy) == False:
