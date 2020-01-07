@@ -47,30 +47,8 @@ def get_feature(x):
       image_file2.write(decoded_string);   
   
     return
-def VGG16(request_name):
-    if config.new_Token is None:
-        get_token()
-    url = 'http://service.mmlab.uit.edu.vn/mmlab_api/vgg16_feature_extract'
-    path_img = os.path.join(settings.MEDIA_ROOT,request_name)
-    filename, file_extension = os.path.splitext(request_name)
-    
-    image = open(path_img, 'rb')
-    image_read = image.read()
-    encoded = base64.encodebytes(image_read)
-    encoded_string = encoded.decode('utf-8')
-    ######################
-    data ={'api_version': '1.0', 'data': {'method': 'vgg16', 'model': '0', 'images': [encoded_string]}}
-    headers = {'Content-type': 'application/json', 
-                    'Authorization': "bearer "+ config.new_Token } 
-    data_json = json.dumps(data)
-    response = requests.post(url, data = data_json, headers=headers)
-    for feature, index in zip(response.json()['data']['predicts'], range(len(response.json()['data']['predicts']))):
-        decoded_string = base64.b64decode(feature)
-        config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-        with open( config.path_new_numpy , "wb") as image_file2:
-            image_file2.write(decoded_string);
-    return  
-def HOG(request_name):
+
+def HOG(request_name,option=1):
     filename, file_extension = os.path.splitext(request_name)
     orient = 32
     pix_per_cell = 32
@@ -86,9 +64,11 @@ def HOG(request_name):
     feature = feature.astype(np.float32)
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
 
+    if option==2:
+        return feature
     np.save(config.path_new_numpy,feature)
-
-def sift_feature(request_name):
+    
+def sift_feature(request_name,option=1):
     
     # Function detect sift feature
     # I call detectAndCompute of opencv.
@@ -116,18 +96,21 @@ def sift_feature(request_name):
 
    
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-    np.save(config.path_new_numpy,feature_sift)
     
-    return True
+    if option==2:
+        return feature_sift
+
+    np.save(config.path_new_numpy,feature_sift)
 
 def mix_feature_sift_hog(request_name):
     filename, file_extension = os.path.splitext(request_name)
 
     current_path = os.path.join(settings.MEDIA_ROOT,request_name)
     
-    feature_hog = HOG(current_path)
+    feature_hog = HOG(request_name,2)
     
-    feature_sift = np.concatenate(sift_feature(current_path))
+    feature_sift = sift_feature(request_name,2)
+    
     feature_mix = np.concatenate((feature_hog,feature_sift))
     len_max = 13000  # maximum mix hog and sift
     if len(feature_mix)>len_max:
@@ -136,59 +119,7 @@ def mix_feature_sift_hog(request_name):
         feature_mix = np.pad(feature_mix,(0,len_max-len(feature_mix)),'constant')
     
     config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-
+    print(len(feature_mix))
     np.save(config.path_new_numpy,feature_mix)
 
     return True
-
-def extract_face(filename, required_size=(160, 160)):
-	face = cv.imread(filename)
-	image = Image.fromarray(face)
-	image = image.resize(required_size)
-	face_array = np.asarray(image)
-	return face_array
-
-def facenet(request_name,option=1):
-    filename, file_extension = os.path.splitext(request_name)
-    PATH_IMG = os.path.join(settings.MEDIA_ROOT,request_name)
-    
-
-    model_name = 'facenet_keras'
-
-
-
-    image = open(PATH_IMG, 'rb')
-    image_read = image.read()
-    encoded = base64.encodebytes(image_read)
-    encoded_string = encoded.decode('utf-8')
-
-    url_feature = 'http://192.168.20.170:3000/facenet/image/'
-    data = {'data': {
-            'model': model_name,
-            'image_encoded': encoded_string
-            }}
-    headers = {'Content-type': 'application/json'}
-    data_json = json.dumps(data)
-    response = requests.post(url_feature, data=data_json, headers=headers)
-
-    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,filename+".npy")
-    a = response.json()['data'][0]['feature']
-    if option==2:
-        return a
-    np.save(config.path_new_numpy,a)
-    
-def resnet():
-    pass
-def mix_facenet_vgg16(request_name):
-    VGG16(request_name)
-    name_in_npy = request_name.split(".")[0]+".npy"
-    path_vgg = os.path.join(settings.MEDIA_ROOT_NPY,name_in_npy)
-    a  = np.load(path_vgg)
-  
-    a = a.flatten()
-    b = facenet(request_name,2)
-    feature_mix = np.concatenate((a,b),0)
-    config.path_new_numpy = os.path.join(settings.MEDIA_ROOT_NPY,name_in_npy)
-
-    np.save(config.path_new_numpy,feature_mix)
-    return 

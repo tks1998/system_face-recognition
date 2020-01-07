@@ -55,14 +55,6 @@ def upload(request):
                 process_API.sift_feature(new_name)
             if choose_method=="3":
                 process_API.mix_feature_sift_hog(new_name)
-            if choose_method=="4":
-                process_API.facenet(new_name)
-            if choose_method=="5":
-                process_API.resnet(new_name)
-            if choose_method=="6":
-                process_API.VGG16(new_name)
-            if choose_method=="7":
-                process_API.mix_facenet_vgg16(new_name)
             config.type_distance == int(choose_distance)
             result = process_request.process_img(new_name,choose_method)
     return render(request, 'pages/upload.html', result)
